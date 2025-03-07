@@ -12,8 +12,8 @@
         }
         
         .code-block {
-            background-color: #f5f5f5; /* 少しグレー（薄いグレー） */
-            color: #333; /* 文字色を黒に近いグレー */
+            background-color: #f5f5f5; /* 薄いグレー */
+            color: #333; /* 文字色 */
             padding: 15px;
             border-radius: 5px;
             font-family: "Courier New", monospace;
@@ -22,7 +22,7 @@
             width: 80%;
             margin: 10px auto;
             overflow-x: auto;
-            border: 1px solid #ddd; /* 少しだけ枠線 */
+            border: 1px solid #ddd; /* 枠線 */
         }
 
         .copy-btn {
@@ -49,7 +49,7 @@
             font-family: "Courier New", monospace;
             border: none;
             background: transparent;
-            color: #333; /* 文字色を濃いめのグレー */
+            color: #333;
             resize: none;
             outline: none;
         }
@@ -70,7 +70,7 @@
 以下のステップを実行し、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
 #ステップ1：キーワードを入力
 ユーザーに「キーワードを入力してください」と確認してください。
-#ステップ 2：学生のレベルを選択
+#ステップ2：学生のレベルを選択
 ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。
 1. **「基礎レベル」** 基本概念を理解するテーマ
 2. **「応用レベル」** 文献検索を活用し、より具体的な研究テーマ
@@ -81,56 +81,37 @@
         </textarea>
     </div>
 
-    <script>
-        function copyToClipboard(id) {
-            let textArea = document.getElementById(id);
-            textArea.select();
-            document.execCommand("copy");
-            alert("コピーしました！");
-        }
-    </script>
-
-</body>
-<!-- Gemini用プロンプト -->
-    <h4>学習支援【Gemini用】</h4>
-<p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
+    <!-- 学習支援【Gemini用】 -->
+    <h3>学習支援【Gemini用】</h3>
+    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
+    
     <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
-        <textarea id="chatgpt_prompt" readonly>
+        <button class="copy-btn" onclick="copyToClipboard('gemini_prompt')">コピーする</button>
+        <textarea id="gemini_prompt" readonly>
 あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
 キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。
 キーワードと学生のレベルをもとに調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
 その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
-  </textarea>
+        </textarea>
     </div>
 
-    <script>
-        function copyToClipboard(id) {
-            let textArea = document.getElementById(id);
-            textArea.select();
-            document.execCommand("copy");
-            alert("コピーしました！");
-        }
-    </script>
-
-</body>
-        <h5>模擬患者生成</h5>
-   <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
+    <!-- 模擬患者生成 -->
+    <h3>模擬患者生成</h3>
+    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
     
     <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
-        <textarea id="chatgpt_prompt" readonly>
+        <button class="copy-btn" onclick="copyToClipboard('patient_prompt')">コピーする</button>
+        <textarea id="patient_prompt" readonly>
 あなたはプロの理学療法士または作業療法士です。  
 ユーザーが指定した疾患に基づき、模擬患者案を3つ作成してください。  
 コードブロックで出力してください。  
 
 ## ステップ1：発症・手術からの期間を選択
 ユーザーに「模擬患者の発症、または手術からの期間を選択してください」と確認し、以下の選択肢を提示してください。
-
 1. 30日未満  
 2. 30～90日  
 3. 90～180日  
-4. 180日以上  
+4. 180日以上 
 
 ## ステップ2：年代の選択
 ユーザーに「模擬患者の年代を選択してください」と確認し、以下の選択肢を提示してください。
@@ -204,7 +185,7 @@
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
-  </textarea>
+        </textarea>
     </div>
 
     <script>
