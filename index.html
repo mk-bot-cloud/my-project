@@ -114,19 +114,57 @@
   - 居住環境（例: 戸建て / マンション / 施設）  
   - 家族構成（例: 配偶者あり / 独居）  
 - 服薬状況:（例: 降圧剤、マドパー錠、NSAIDs など）  
+
+## Ⅱ．評価結果
+### 1. 共通の評価項目
+#### 身体機能評価
+- 筋力評価: MMT（徒手筋力テスト）、握力  
+- 関節可動域: 主要な関節のROM評価  
+- 基本的動作能力: 自立度、具体的な方法を記載  
+- 歩行機能: 10m歩行テスト、Timed Up & Go（TUG）テスト、6分間歩行テスト  
+- バランス機能: Berg Balance Scale（BBS）  
+- 疼痛評価: Visual Analog Scale（VAS）  
+- 日常生活動作（ADL）: Functional Independence Measure（FIM）  
+
+#### 認知機能評価
+- 全般的な認知機能: HDS-R（長谷川式簡易知能評価スケール）、MMSE（Mini-Mental State Examination）  
+- 注意・遂行機能: Trail Making Test（TMT-A/B）  
+
+## Ⅲ．疾患ごとの評価
+### 疾患に応じた特異的評価を自動で生成してください
+疾患ごとに適切な評価を追加してください。以下の例を参考に、自動で評価項目を選択してください。
+
+#### 【例】
+- **脳卒中（Stroke）:**  
+  - Brunnstrom Recovery Stage（上肢・手指・下肢）  
+  - Modified Ashworth Scale（MAS）  
+
+- **脊髄小脳変性症（SCD）:**  
+  - SARA（小脳性運動失調評価）  
+  - 深部腱反射・病的反射  
+  - ロンベルグ徴候  
+
+- **変形性膝関節症（OA knee）:**  
+  - KL分類（Kellgren-Lawrence分類）  
+  - 炎症所見  
+  - FTA（大腿脛骨角）、脚長差  
+
+- **変形性股関節症（OA hip）:**  
+  - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
+  - 画像診断（X線所見）  
+  - 炎症所見、脚長差  
     </textarea>
+
     <br>
-    <button onclick="copyToClipboard('promptText')">📋 コピー</button>
+    <button onclick="copyToClipboard()">📋 コピー</button>
 
     <script>
-        function copyToClipboard(id) {
-            let textArea = document.getElementById(id);
+        function copyToClipboard() {
+            let textArea = document.getElementById("promptText");
             textArea.select();
             document.execCommand("copy");
             alert("コピーしました！");
         }
-    </script>
-
+          </script>
 </body>
 </html>
-
