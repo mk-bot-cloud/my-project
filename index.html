@@ -10,20 +10,35 @@
             text-align: center;
             padding: 20px;
         }
-textarea {
-    width: 80%;
-    height: 180px;
-    font-size: 14px;
-    font-family: "Courier New", monospace;
-    border: 1.5px solid #999; /* 枠線を少し濃く */
-    padding: 8px; /* 内側の余白を少し減らす */
-    background-color: #fff; /* 背景色を白に */
-}
+        textarea {
+            width: 80%;
+            height: 180px;
+            font-size: 14px;
+            font-family: "Courier New", monospace;
+            border: 1.5px solid #999; /* 枠線を少し濃く */
+            padding: 8px;
+            background-color: #fff;
+        }
         button {
-            margin-bottom: 20px;
-            padding: 10px;
-            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4CAF50; /* 緑色 */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
             cursor: pointer;
+            border-radius: 5px;
+            margin: 10px auto;
+            gap: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button img {
+            width: 16px;
+            height: 16px;
         }
     </style>
 </head>
@@ -31,7 +46,7 @@ textarea {
 
     <h2>用途別プロンプト</h2>
 
-    <!-- 学習支援prompt -->
+    <!-- 学習支援【ChatGPT 用】 -->
     <h3>学習支援【ChatGPT 用】</h3>
     <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
     
@@ -50,13 +65,12 @@ textarea {
 ・コードブロックで出力してください。
     </textarea>
     <br>
-<button onclick="copyToClipboard('chatgpt_prompt')">
-    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-    コピー
-</button>
+    <button onclick="copyToClipboard('chatgpt_prompt')">
+        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+        コピー
+    </button>
 
-
-    <!-- Gemini用プロンプト -->
+    <!-- 学習支援【Gemini用】 -->
     <h3>学習支援【Gemini用】</h3>
     <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
     
@@ -64,16 +78,16 @@ textarea {
 あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。キーワードと学生のレベルをもとに調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
     </textarea>
     <br>
-<button onclick="copyToClipboard('chatgpt_prompt')">
-    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-    コピー
-</button>
+    <button onclick="copyToClipboard('gemini_prompt')">
+        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+        コピー
+    </button>
 
-
+    <!-- 模擬患者生成 -->
     <h3>模擬患者生成</h3>
-    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
+    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
     
-  <textarea id="promptText" readonly>
+    <textarea id="promptText" readonly>
 あなたはプロの理学療法士または作業療法士です。  
 ユーザーが指定した疾患に基づき、模擬患者案を3つ作成してください。  
 コードブロックで出力してください。  
@@ -85,91 +99,21 @@ textarea {
 2. 30～90日  
 3. 90～180日  
 4. 180日以上  
+    </textarea>
 
-## ステップ2：年代の選択
-ユーザーに「模擬患者の年代を選択してください」と確認し、以下の選択肢を提示してください。
+    <button onclick="copyToClipboard('promptText')">
+        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+        コピー
+    </button>
 
-1. 60歳未満  
-2. 60～74歳  
-3. 75～90歳  
-4. 90歳以上  
+    <script>
+        function copyToClipboard(id) {
+            let textArea = document.getElementById(id);
+            textArea.select();
+            document.execCommand("copy");
+            alert("コピーしました！");
+        }
+    </script>
 
-## Ⅰ．模擬患者の基本情報
-### 1. 症例紹介
-- 年齢:  
-- 性別:  
-- 身長・体重:  
-- 利き手:  
-- 主訴:  
-
-### 2. 医学的情報
-- 疾患名: （ユーザーが入力した疾患を反映）  
-- 発症からの日数:  
-- 障害名:  
-- 現病歴:  
-  - 発症時の症状、診断結果  
-  - 現在の主要な症状・治療経過  
-- 既往歴:（例: 高血圧 / 糖尿病 / 心疾患 など）  
-
-### 3. 社会的情報
-- 家族歴:（例: 親が脳卒中を経験 など）  
-- 発症前の生活:  
-  - 生活状況（例: 仕事の有無、趣味、運動習慣 など）  
-- 生活の特徴:  
-  - 居住環境（例: 戸建て / マンション / 施設）  
-  - 家族構成（例: 配偶者あり / 独居）  
-- 服薬状況:（例: 降圧剤、マドパー錠、NSAIDs など）  
-
-## Ⅱ．評価結果
-### 1. 共通の評価項目
-#### 身体機能評価
-- 筋力評価: MMT（徒手筋力テスト）、握力  
-- 関節可動域: 主要な関節のROM評価  
-- 基本的動作能力: 自立度、具体的な方法を記載  
-- 歩行機能: 10m歩行テスト、Timed Up & Go（TUG）テスト、6分間歩行テスト  
-- バランス機能: Berg Balance Scale（BBS）  
-- 疼痛評価: Visual Analog Scale（VAS）  
-- 日常生活動作（ADL）: Functional Independence Measure（FIM）  
-
-#### 認知機能評価
-- 全般的な認知機能: HDS-R（長谷川式簡易知能評価スケール）、MMSE（Mini-Mental State Examination）  
-- 注意・遂行機能: Trail Making Test（TMT-A/B）  
-
-## Ⅲ．疾患ごとの評価
-### 疾患に応じた特異的評価を自動で生成してください
-疾患ごとに適切な評価を追加してください。以下の例を参考に、自動で評価項目を選択してください。
-
-#### 【例】
-- **脳卒中（Stroke）:**  
-  - Brunnstrom Recovery Stage（上肢・手指・下肢）  
-  - Modified Ashworth Scale（MAS）  
-
-- **脊髄小脳変性症（SCD）:**  
-  - SARA（小脳性運動失調評価）  
-  - 深部腱反射・病的反射  
-  - ロンベルグ徴候  
-
-- **変形性膝関節症（OA knee）:**  
-  - KL分類（Kellgren-Lawrence分類）  
-  - 炎症所見  
-  - FTA（大腿脛骨角）、脚長差  
-
-- **変形性股関節症（OA hip）:**  
-  - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
-  - 画像診断（X線所見）  
-  - 炎症所見、脚長差  
-</textarea>
-
-<button onclick="copyToClipboard('chatgpt_prompt')">
-    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-    コピー
-</button>
-
-<script>
-    function copyToClipboard(id) {
-        let textArea = document.getElementById(id);
-        textArea.select();
-        document.execCommand("copy");
-        alert("コピーしました！");
-    }
-</script>
+</body>
+</html>
