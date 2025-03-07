@@ -91,4 +91,23 @@
     </script>
 
 </body>
-</html>
+<!-- Gemini用プロンプト -->
+    <h3>学習支援【Gemini用】</h3>
+<p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
+        <textarea id="chatgpt_prompt" readonly>
+あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。キーワードと学生のレベルをもとに調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
+  </textarea>
+    </div>
+
+    <script>
+        function copyToClipboard(id) {
+            let textArea = document.getElementById(id);
+            textArea.select();
+            document.execCommand("copy");
+            alert("コピーしました！");
+        }
+    </script>
+
+</body>
