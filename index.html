@@ -10,35 +10,47 @@
             text-align: center;
             padding: 20px;
         }
-        textarea {
+        
+        .code-block {
+            background-color: #1e1e1e; /* 背景をダークグレーに */
+            color: #ffffff; /* 文字色を白に */
+            padding: 15px;
+            border-radius: 5px;
+            font-family: "Courier New", monospace;
+            text-align: left;
+            position: relative;
             width: 80%;
+            margin: 10px auto;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            width: 100%;
             height: 180px;
             font-size: 14px;
             font-family: "Courier New", monospace;
-            border: 1.5px solid #999; /* 枠線を少し濃く */
-            padding: 8px;
-            background-color: #fff;
-        }
-        button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #4CAF50; /* 緑色 */
-            color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px auto;
-            gap: 5px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        button img {
-            width: 16px;
-            height: 16px;
+            background: transparent;
+            color: white;
+            resize: none;
+            outline: none;
         }
     </style>
 </head>
@@ -48,11 +60,13 @@
 
     <!-- 学習支援【ChatGPT 用】 -->
     <h3>学習支援【ChatGPT 用】</h3>
-    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
+    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
     
-    <textarea id="chatgpt_prompt" readonly>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
+        <textarea id="chatgpt_prompt" readonly>
 あなたは、理学療法および作業療法分野のプロの教育者です。
-以下のステップを実行し、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
+以下のステップを実行し、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
 #ステップ1：キーワードを入力
 ユーザーに「キーワードを入力してください」と確認してください。
 #ステップ 2：学生のレベルを選択
@@ -63,48 +77,8 @@
 #ステップ3：調査テーマ、検索クエリを作成
 #出力条件 
 ・コードブロックで出力してください。
-    </textarea>
-    <br>
-    <button onclick="copyToClipboard('chatgpt_prompt')">
-        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-        コピー
-    </button>
-
-    <!-- 学習支援【Gemini用】 -->
-    <h3>学習支援【Gemini用】</h3>
-    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
-    
-    <textarea id="gemini_prompt" readonly>
-あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。キーワードと学生のレベルをもとに調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
-    </textarea>
-    <br>
-    <button onclick="copyToClipboard('gemini_prompt')">
-        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-        コピー
-    </button>
-
-    <!-- 模擬患者生成 -->
-    <h3>模擬患者生成</h3>
-    <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。</p>
-    
-    <textarea id="promptText" readonly>
-あなたはプロの理学療法士または作業療法士です。  
-ユーザーが指定した疾患に基づき、模擬患者案を3つ作成してください。  
-コードブロックで出力してください。  
-
-## ステップ1：発症・手術からの期間を選択
-ユーザーに「模擬患者の発症、または手術からの期間を選択してください」と確認し、以下の選択肢を提示してください。
-
-1. 30日未満  
-2. 30～90日  
-3. 90～180日  
-4. 180日以上  
-    </textarea>
-
-    <button onclick="copyToClipboard('promptText')">
-        <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
-        コピー
-    </button>
+        </textarea>
+    </div>
 
     <script>
         function copyToClipboard(id) {
