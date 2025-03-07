@@ -68,7 +68,7 @@
     <h3>模擬患者生成</h3>
     <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
     
-    <textarea id="promptText" readonly>
+  <textarea id="promptText" readonly>
 あなたはプロの理学療法士または作業療法士です。  
 ユーザーが指定した疾患に基づき、模擬患者案を3つ作成してください。  
 コードブロックで出力してください。  
@@ -153,18 +153,16 @@
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差  
-    </textarea>
+</textarea>
 
-    <br>
-    <button onclick="copyToClipboard()">📋 コピー</button>
+<br>
+<button onclick="copyToClipboard('promptText')">📋 コピー</button>
 
-    <script>
-        function copyToClipboard() {
-            let textArea = document.getElementById("promptText");
-            textArea.select();
-            document.execCommand("copy");
-            alert("コピーしました！");
-        }
-          </script>
-</body>
-</html>
+<script>
+    function copyToClipboard(id) {
+        let textArea = document.getElementById(id);
+        textArea.select();
+        document.execCommand("copy");
+        alert("コピーしました！");
+    }
+</script>
