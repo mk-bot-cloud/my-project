@@ -50,7 +50,11 @@ textarea {
 ・コードブロックで出力してください。
     </textarea>
     <br>
-    <button onclick="copyToClipboard('chatgpt_prompt')">📋 コピー</button>
+<button onclick="copyToClipboard('chatgpt_prompt')">
+    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+    コピー
+</button>
+
 
     <!-- Gemini用プロンプト -->
     <h3>学習支援【Gemini用】</h3>
@@ -60,7 +64,11 @@ textarea {
 あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。キーワードと学生のレベルをもとに調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
     </textarea>
     <br>
-    <button onclick="copyToClipboard('gemini_prompt')">📋 コピー</button>
+<button onclick="copyToClipboard('chatgpt_prompt')">
+    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+    コピー
+</button>
+
 
     <h3>模擬患者生成</h3>
     <p>このプロンプトは、理学療法および作業療法の分野で学生の学習をサポートするためのものです。キーワードと学生のレベルを指定すると、それに応じた調査テーマと検索クエリを生成します。</p>
@@ -152,8 +160,10 @@ textarea {
   - 炎症所見、脚長差  
 </textarea>
 
-<br>
-<button onclick="copyToClipboard('promptText')">📋 コピー</button>
+<button onclick="copyToClipboard('chatgpt_prompt')">
+    <img src="https://cdn-icons-png.flaticon.com/512/126/126498.png" alt="コピーアイコン">
+    コピー
+</button>
 
 <script>
     function copyToClipboard(id) {
