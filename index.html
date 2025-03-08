@@ -245,9 +245,22 @@ textarea {
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
- </textarea>
+             </textarea>
         </div>
     </td>
+    <td>
+        <strong>議事録作成（Google AI Studioを使用）</strong>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピー</button>
+            <textarea id="minutes_prompt" readonly>
+アップロードしたデータを話者ごとに整理して議事録を作成してください。
+「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
+話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
+            </textarea>
+        </div>
+    </td>
+</tr>
+<tr>
     <td>
         <strong>ルーブリック</strong>
         <div class="code-block">
@@ -272,19 +285,6 @@ textarea {
 - **B**（標準的）
 - **C**（改善が必要）
 - **D**（不十分）
-            </textarea>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <strong>議事録作成（Google AI Studioを使用）</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピー</button>
-            <textarea id="minutes_prompt" readonly>
-アップロードしたデータを話者ごとに整理して議事録を作成してください。
-「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
-話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
             </textarea>
         </div>
     </td>
