@@ -12,28 +12,28 @@
         }
 
 table {
-    width: 100%; /* 表を画面幅いっぱいに */
-    max-width: 1400px; /* 最大幅を広げる */
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: fixed; /* 各列の幅を均等に固定 */
 }
 
 th, td {
     border: 1px solid #ddd;
-    padding: 6px; /* 余白を調整 */
-    vertical-align: top;
-    width: 50%; /* 各列を均等にする */
+    padding: 10px;
+    vertical-align: top; /* 上揃えにして高さを揃える */
+    width: 50%;
 }
 
 .code-block {
     background-color: #f5f5f5;
     position: relative;
     border-radius: 5px;
-    padding: 10px; /* コードブロックの内側の余白を少し増やす */
+    padding: 10px;
     margin: 0;
-    min-height: 180px; /* コードブロックの縦の高さを拡大 */
-    width: 100%; /* 幅を最大に広げる */
+    min-height: 250px; /* 高さを統一するために拡大 */
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
