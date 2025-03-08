@@ -250,17 +250,6 @@ textarea {
             </td>
 <tr>
     <td>
-        <strong>議事録作成（Google AI Studioを使用）</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピー</button>
-            <textarea id="minutes_prompt" readonly>
-アップロードしたデータを話者ごとに整理して議事録を作成してください。
-「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
-話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
-            </textarea>
-        </div>
-    </td>
-    <td>
         <strong>ルーブリック</strong>
         <div class="code-block">
             <button class="copy-btn" onclick="copyToClipboard('chatgpt_osce')">コピー</button>
@@ -288,6 +277,18 @@ textarea {
         </div>
     </td>
     <td>
+        <strong>議事録作成（Google AI Studioを使用）</strong>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピー</button>
+            <textarea id="minutes_prompt" readonly>
+アップロードしたデータを話者ごとに整理して議事録を作成してください。
+「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
+話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
+            </textarea>
+        </div>
+    </td>
+</tr>
+
 
 
     </table>
