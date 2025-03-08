@@ -77,15 +77,14 @@
         </a>
     </p>
 
-        <!-- 左側列（ChatGPTプロンプト） -->
-        <div class="column" id="chatgpt_prompts">
-            <div class="column-title">ChatGPTプロンプト集</div>
+<div class="container">
+    <!-- 左: ChatGPTプロンプト列 -->
+    <div class="column" id="chatgpt_prompts">
+        <h3 class="column-title">chatGPTプロンプト集</h3>
 
-            <div class="prompt-block">
-                <h4>基本構造プロンプト</h4>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
-                    <textarea id="chatgpt_structure" readonly>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
+            <textarea id="chatgpt_structure" readonly>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
@@ -216,19 +215,17 @@
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
-    </textarea>
+            </textarea>
+        </div>
     </div>
-    </div>
-        
-        <!-- 右側列（Geminiプロンプト） -->
-        <div class="column" id="gemini_prompts">
-            <div class="column-title">Geminiプロンプト集</div>
 
-            <div class="prompt-block">
-                <h4>基本構造プロンプト</h4>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
-                    <textarea id="gemini_structure" readonly>
+    <!-- 右側Gemini列 -->
+    <div class="column" id="gemini_prompts">
+        <div class="column-title">Geminiプロンプト集</div>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
+            <textarea id="gemini_structure" readonly>
 （役割）あなたは、症例検討会のプレゼンテーションに慣れている理学療法士です。
 （コンテキスト）担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
 （タスク）発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
