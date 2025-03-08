@@ -156,12 +156,12 @@ textarea {
                 </div>
             </td>
         </tr>
-        <tr>
-            <td>
-                <strong>模擬患者生成</strong>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_patient')">コピー</button>
-                    <textarea id="chatgpt_patient" readonly>
+<tr>
+    <td>
+        <strong>模擬患者生成</strong>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('chatgpt_patient')">コピー</button>
+            <textarea id="chatgpt_patient" readonly>
 あなたはプロの理学療法士または作業療法士です。  
 ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。  
 コードブロックで出力してください。  
@@ -245,9 +245,37 @@ textarea {
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
-    </textarea>
-                </div>
-            </td>
+ </textarea>
+        </div>
+    </td>
+    <td>
+        <strong>ルーブリック</strong>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard('chatgpt_osce')">コピー</button>
+            <textarea id="chatgpt_osce" readonly>
+#設定/役割
+あなたは理学療法および作業療法分野の教育者であり、OSCE（客観的臨床能力試験）の評価を行う教員です。OSCEの採点基準としてルーブリックを作成してください。
+#依頼内容
+以下の観点で評価してください。
+1. **基礎知識の活用**：解剖・生理・運動学の知識を適切に応用し、評価や治療の根拠を説明できるか。
+2. **評価・治療の手順**：患者の状態に応じた適切な評価・治療計画を立案し、論理的に実施できるか。
+3. **技術の正確性**：関節可動域測定、筋力評価、治療手技などが正確かつ適切に行えるか。
+4. **安全管理**：患者の安全を確保し、不適切な動作やリスクのある対応をしていないか。
+5. **コミュニケーション能力**：患者に適切な声掛けを行い、安心感を与える説明ができるか。
+#前提条件
+評価対象は、OSCE試験を受験する理学療法・作業療法の学生です。
+ルーブリックは、客観的かつ公平な評価ができるように作成してください。
+#出力条件
+表として示してください。
+評価基準は以下の4段階で作成してください。
+- **A**（優れている）
+- **B**（標準的）
+- **C**（改善が必要）
+- **D**（不十分）
+            </textarea>
+        </div>
+    </td>
+</tr>
 <tr>
     <td>
         <strong>議事録作成（Google AI Studioを使用）</strong>
@@ -261,39 +289,7 @@ textarea {
         </div>
     </td>
 </tr>
-<tr>
-    <td>
-        <strong>ルーブリック</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('chatgpt_osce')">コピー</button>
-            <textarea id="chatgpt_osce" readonly>
-#設定/役割
-あなたは理学療法および作業療法分野の教育者であり、OSCE（客観的臨床能力試験）の評価を行う教員です。OSCEの採点基準としてルーブリックを作成してください。
-#依頼内容
-以下の観点で評価してください。
-1. **基礎知識の活用**：解剖・生理・運動学の知識を適切に応用し、評価や治療の根拠を説明できるか。  
-2. **評価・治療の手順**：患者の状態に応じた適切な評価・治療計画を立案し、論理的に実施できるか。  
-3. **技術の正確性**：関節可動域測定、筋力評価、治療手技などが正確かつ適切に行えるか。  
-4. **安全管理**：患者の安全を確保し、不適切な動作やリスクのある対応をしていないか。  
-5. **コミュニケーション能力**：患者に適切な声掛けを行い、安心感を与える説明ができるか。  
-#前提条件
-評価対象は、OSCE試験を受験する理学療法・作業療法の学生です。  
-ルーブリックは、客観的かつ公平な評価ができるように作成してください。  
-#出力条件
-表として示してください。  
-評価基準は以下の4段階で作成してください。  
-- **A**（優れている）  
-- **B**（標準的）  
-- **C**（改善が必要）  
-- **D**（不十分）  
-            </textarea>
-        </div>
-    </td>
-    <td>
-
-
-
-
+        
     </table>
 
     <script>
