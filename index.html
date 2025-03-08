@@ -104,23 +104,8 @@
                 </textarea>
             </div>
         </div>
-        
-        <!-- 右: Geminiプロンプト列 -->
-        <div class="column" id="gemini_prompts">
-            <div class="column-title">Geminiプロンプト集</div>
 
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
-                <textarea id="gemini_structure" readonly>
-（役割）あなたは、症例検討会のプレゼンテーションに慣れている理学療法士です。
-（コンテキスト）担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
-（タスク）発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
-（フォーマット）発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
-    </textarea>
-    </div>
-
-    
-    <h3>学習支援【ChatGPT用】</h3>
+            <h3>学習支援【ChatGPT用】</h3>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
         <textarea id="chatgpt_prompt" readonly>
@@ -140,21 +125,7 @@
     </textarea>
     </div>
 
-    
-    <h3>学習支援【Gemini用】</h3>
-    <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('gemini_prompt')">コピーする</button>
-        <textarea id="gemini_prompt" readonly>
-あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
-キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。
-キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
-その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コードブロックで出力してください。
-また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
-    </textarea>
-    </div>
-
-
-    <h3>模擬患者生成</h3>
+            <h3>模擬患者生成</h3>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard('patient_prompt')">コピーする</button>
         <textarea id="patient_prompt" readonly>
@@ -241,6 +212,32 @@
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
+    </textarea>
+    </div>
+        
+        <!-- 右: Geminiプロンプト列 -->
+        <div class="column" id="gemini_prompts">
+            <div class="column-title">Geminiプロンプト集</div>
+
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
+                <textarea id="gemini_structure" readonly>
+（役割）あなたは、症例検討会のプレゼンテーションに慣れている理学療法士です。
+（コンテキスト）担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
+（タスク）発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
+（フォーマット）発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
+    </textarea>
+    </div>
+
+    <h3>学習支援【Gemini用】</h3>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard('gemini_prompt')">コピーする</button>
+        <textarea id="gemini_prompt" readonly>
+あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
+キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。
+キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
+その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コードブロックで出力してください。
+また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
     </textarea>
     </div>
 
