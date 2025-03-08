@@ -78,9 +78,10 @@
     </p>
 
     <div class="container">
-        <!-- 左の列 -->
-        <div class="column">
-            <h3 class="prompt-title">chatGPTプロンプト基本構造</h3>
+        <!-- 左: ChatGPTプロンプト列 -->
+        <div class="column" id="chatgpt_prompts">
+            <div class="column-title">chatGPTプロンプト集</div>
+
             <div class="code-block">
                 <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
                 <textarea id="chatgpt_structure" readonly>
