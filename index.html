@@ -81,10 +81,13 @@
     <!-- 左: ChatGPTプロンプト列 -->
     <div class="column" id="chatgpt_prompts">
         <h3 class="column-title">chatGPTプロンプト集</h3>
-
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
-            <textarea id="chatgpt_structure" readonly>
+    </textarea>
+    </div>
+        
+        <h4 style="margin-top: 20px;">chatGPTプロンプト基本構造</h4>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
+        <textarea id="chatgpt_structure" readonly>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
