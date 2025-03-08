@@ -10,28 +10,19 @@
             text-align: center;
             padding: 20px;
         }
-
-        .container {
-            display: flex;
-            justify-content: center; /* 中央寄せ */
-            gap: 20px; /* 列の間隔 */
-            flex-wrap: wrap; /* 狭くなった時に折り返す */
-        }
-
+        
         .code-block {
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: #f5f5f5; /* 薄いグレー */
+            color: #333; /* 文字色 */
             padding: 8px 12px; 
             border-radius: 5px;
             font-family: "Courier New", monospace;
             text-align: left;
             position: relative;
-            width: 45%; /* 2列にするため幅を調整 */
-            min-width: 300px; /* 最小幅 */
-            margin: 10px;
+            width: 80%;
+            margin: 10px auto;
             overflow-x: auto;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
+            border: 1px solid #ddd; /* 枠線 */
         }
 
         .copy-btn {
@@ -73,14 +64,10 @@
     </a>
 </p>
 
-<div class="container">
-    <h3 class="container-title">chatGPTプロンプト基本構造</h3>
+<h3 style="margin-top: 20px;">chatGPTプロンプト基本構造</h3>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
         <textarea id="chatgpt_structure" readonly>
-<!-- 内容 -->
-        </textarea>
-</div>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
