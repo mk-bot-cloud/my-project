@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>業務効率化AIプロンプト集</title>
     <style>
         body {
@@ -10,35 +10,39 @@
             padding: 20px;
             text-align: center;
         }
+
         .container {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
+
         .column {
             width: 45%;
             min-width: 300px;
         }
+
         .column-title {
-            font-size: 18px;
-            margin-bottom: 8px;
-            text-align: center;
             font-weight: bold;
+            margin-bottom: 10px;
         }
+
+        .prompt-block {
+            margin-bottom: 20px;
+        }
+
         .code-block {
             background-color: #f5f5f5;
-            padding: 8px 12px; 
+            padding: 8px 12px;
             border-radius: 5px;
             font-family: "Courier New", monospace;
             text-align: left;
             position: relative;
-            width: 100%;
-            margin: 0 auto 20px auto;
             overflow-x: auto;
             border: 1px solid #ddd;
-            box-sizing: border-box;
         }
+
         .copy-btn {
             position: absolute;
             top: 10px;
@@ -51,25 +55,21 @@
             cursor: pointer;
             border-radius: 5px;
         }
-        .copy-btn:hover {
-            background-color: #45a049;
-        }
+
         textarea {
             width: 100%;
             height: 180px;
             font-size: 14px;
-            font-family: "Courier New", monospace;
             border: none;
             background: transparent;
-            color: #333;
             resize: none;
             outline: none;
         }
     </style>
 </head>
+
 <body>
-  
-    <h2>業務効率化AI</h2>
+    <h2>業務効率化AIプロンプト集</h2>
     <p style="margin-top: 10px;">
         プロンプトを作成する際にはPromptiaというサイトを参考にするとよいです：
         <a href="https://prompt.quel.jp/" target="_blank" style="color: #007bff; text-decoration: none;">
@@ -77,14 +77,15 @@
         </a>
     </p>
 
-    <div class="container">
-        <!-- 左: ChatGPTプロンプト列 -->
+        <!-- 左側列（ChatGPTプロンプト） -->
         <div class="column" id="chatgpt_prompts">
-            <div class="column-title">chatGPTプロンプト集</div>
+            <div class="column-title">ChatGPTプロンプト集</div>
 
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
-                <textarea id="chatgpt_structure" readonly>
+            <div class="prompt-block">
+                <h4>基本構造プロンプト</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_structure')">コピーする</button>
+                    <textarea id="chatgpt_structure" readonly>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
@@ -101,14 +102,15 @@
 どのような形式で出力するか
 例. 分かりやすい日本語でお願いします。
 例. 表として示して下さい。
-                </textarea>
+                    </textarea>
+                </div>
             </div>
-        </div>
 
-            <h3>学習支援【ChatGPT用】</h3>
-    <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
-        <textarea id="chatgpt_prompt" readonly>
+            <div class="prompt-block">
+                <h4>学習支援</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_study')">コピーする</button>
+                    <textarea id="chatgpt_study" readonly>
 あなたは、理学療法および作業療法分野のプロの教育者です。
 以下のステップを実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
 調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
@@ -122,10 +124,12 @@
 #ステップ3：調査テーマ、検索クエリを作成
 #出力条件 
 ・コードブロックで出力してください。
-    </textarea>
-    </div>
+                    </textarea>
+                </div>
+            </div>
 
-            <h3>模擬患者生成</h3>
+            <div class="prompt-block">
+            <h4>模擬患者生成</h4>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard('patient_prompt')">コピーする</button>
         <textarea id="patient_prompt" readonly>
@@ -214,25 +218,29 @@
   - 炎症所見、脚長差
     </textarea>
     </div>
+    </div>
         
-        <!-- 右: Geminiプロンプト列 -->
+        <!-- 右側列（Geminiプロンプト） -->
         <div class="column" id="gemini_prompts">
             <div class="column-title">Geminiプロンプト集</div>
 
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
-                <textarea id="gemini_structure" readonly>
+            <div class="prompt-block">
+                <h4>基本構造プロンプト</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('gemini_structure')">コピーする</button>
+                    <textarea id="gemini_structure" readonly>
 （役割）あなたは、症例検討会のプレゼンテーションに慣れている理学療法士です。
 （コンテキスト）担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
 （タスク）発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
 （フォーマット）発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
-    </textarea>
-    </div>
-
-    <h3>学習支援【Gemini用】</h3>
+                    </textarea>
+                </div>
+            </div>
+            
+    <h4>学習支援</h4>
     <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('gemini_prompt')">コピーする</button>
-        <textarea id="gemini_prompt" readonly>
+        <button class="copy-btn" onclick="copyToClipboard('chatgpt_prompt')">コピーする</button>
+        <textarea id="chatgpt_prompt" readonly>
 あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
 キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。
 キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
@@ -240,8 +248,10 @@
 また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
     </textarea>
     </div>
+    </div>
 
-    <h3>議事録作成</h3>
+         <div class="prompt-block">
+            <h4>議事録作成</h4>
 　　<div class="code-block">
    　　 <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピーする</button>
    　　 <textarea id="minutes_prompt" readonly>
