@@ -130,7 +130,9 @@ textarea {
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyToClipboard('chatgpt_learning')">コピー</button>
                     <textarea id="chatgpt_learning" readonly>
+#設定/役割
 あなたは、理学療法および作業療法分野のプロの教育者です。
+#依頼内容            
 以下のステップを実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
 調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
 #ステップ1：キーワードを入力
@@ -141,6 +143,8 @@ textarea {
 2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ
 3.「発展レベル」：最新の研究動向を反映した高度なテーマ 
 #ステップ3：調査テーマ、検索クエリを作成
+#前提条件
+学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。
 #出力条件 
 ・コードブロックで出力してください。
     </textarea>
@@ -166,9 +170,10 @@ textarea {
         <div class="code-block">
             <button class="copy-btn" onclick="copyToClipboard('chatgpt_patient')">コピー</button>
             <textarea id="chatgpt_patient" readonly>
-あなたはプロの理学療法士または作業療法士です。  
-ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。  
-コードブロックで出力してください。  
+#設定/役割
+あなたはプロの理学療法士または作業療法士です。 
+#依頼内容         
+ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。   
 ##ステップ1：発症・手術からの期間を選択
 ユーザーに「模擬患者の発症、または手術からの期間を選択してください」と確認し、以下の選択肢を提示してください。
 1. 30日未満  
@@ -236,6 +241,8 @@ textarea {
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
+#出力条件
+コードブロックで出力してください。
              </textarea>
         </div>
     </td>
