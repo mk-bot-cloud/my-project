@@ -79,7 +79,55 @@
         #chatgpt-prompts.active {
             display: block;
         }
+        .code-block {
+            background-color: #e2e8f0;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            position: relative;
+        }
+        .code-block pre {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.875rem;
+            line-height: 1.5rem;
+            color: #1f2937;
+            margin: 0;
+        }
+        .copy-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.875rem;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+        .copy-btn:active {
+            background-color: #388e3c;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: translateY(1px);
+        }
     </style>
+    <script>
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // コピー成功時の処理（例：トースト通知を表示）
+                alert('コピーしました！'); // シンプルなアラート表示
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('コピーに失敗しました。');
+            });
+        }
+    </script>
 </head>
 <body class="bg-gray-100 p-6">
     <div class="max-w-7xl mx-auto">
@@ -96,8 +144,9 @@
             <h2 class="prompt-title">基本構造 (ChatGPT)</h2>
             <div class="prompt-card">
                 <h3 class="prompt-title">プロンプト</h3>
-                <p class="prompt-content">
-                    <pre><code>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')">コピー</button>
+                    <pre id="chatgpt_basic"><code>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
@@ -115,11 +164,7 @@
 例. 分かりやすい日本語でお願いします。
 例. 表として示して下さい。
                     </code></pre>
-                </p>
-                <button class="copy-button" data-prompt="#設定/役割\nどのような立場、領域から生成してもらいたいか\n例. あなたはプロの理学療法士です。\n例: ここは日本の長崎県にある総合病院です。\n#依頼内容\n何を(目的語)、どう(動詞)してもらいたいか\n例: 脳卒中に対する評価指標をアウトカム別にまとめて下さい。\n例: 膝OA者の膝構造を示す骨画像のイラストを出力して下さい。\n#前提条件\n想定される聞き手は誰か\n例: 聞き手は、臨床現場で働く理学療法士です。\n例: 聞き手は、専門知識を持たない一般人です。\n#出力条件\nどのような形式で出力するか\n例: 分かりやすい日本語でお願いします。\n例: 表として示して下さい。">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
+                </div>
             </div>
 
             <div class="prompt-card">
@@ -237,15 +282,18 @@
 
         copyButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const promptText = button.getAttribute('data-prompt');
+                const promptText = document.getElementById('chatgpt_basic').textContent;
                 navigator.clipboard.writeText(promptText).then(() => {
-                    // コピー成功時の処理
+                    // コピー成功時の処理（例：トースト通知を表示）
+                    alert('コピーしました！'); // シンプルなアラート表示
                 }).catch(err => {
                     console.error('Failed to copy: ', err);
+                    alert('コピーに失敗しました。');
                 });
             });
         });
     </script>
 </body>
 </html>
+
 
