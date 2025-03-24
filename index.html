@@ -79,22 +79,21 @@
         #chatgpt-prompts.active {
             display: block;
         }
-        .code-block {
-            background-color: #e2e8f0;
-            border-radius: 0.375rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            overflow-x: auto;
-            position: relative;
-            margin: 0; /* 各プロンプト間のマージンを削除 */
+.code-block {
+    background-color: #f1f5f9; /* 薄いグレーに変更 */
+    border-radius: 0.375rem;
+    padding: 0.75rem; /* 少し余白を詰める */
+    overflow-x: auto;
+    position: relative;
+    margin: 0;
         }
-        .code-block pre {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.875rem;
-            line-height: 1.5rem;
-            color: #1f2937;
-            margin: 0;
-        }
+.code-block pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.825rem; /* 少し小さめに */
+    line-height: 1.4rem;
+    color: #1f2937;
+    margin: 0;
+}
         .copy-btn {
             background-color: #4CAF50;
             color: white;
@@ -127,11 +126,11 @@
             width: 50%;
             padding-right: 1.5rem; /* 列間のギャップ */
         }
-        .prompt-row {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            margin-bottom: 1.5rem; /* プロンプトのペア間のマージン */
+.prompt-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 0.75rem; /* 縦の間隔を狭く */
         }
         .prompt-card {
             margin-bottom: 0;
