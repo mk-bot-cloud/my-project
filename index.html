@@ -69,7 +69,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
             gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
@@ -86,6 +86,7 @@
             margin-bottom: 1rem;
             overflow-x: auto;
             position: relative;
+            margin: 0; /* 各プロンプト間のマージンを削除 */
         }
         .code-block pre {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -115,6 +116,27 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             transform: translateY(1px);
         }
+
+        /* 2列レイアウトのためのスタイル */
+        .prompt-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .prompt-column {
+            width: 50%;
+            padding-right: 1.5rem; /* 列間のギャップ */
+        }
+        .prompt-row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 1.5rem; /* プロンプトのペア間のマージン */
+        }
+        .prompt-card {
+            margin-bottom: 0;
+        }
+
     </style>
     <script>
         function copyToClipboard(elementId) {
@@ -142,11 +164,13 @@
 
         <div id="chatgpt-prompts" class="prompt-content">
             <h2 class="prompt-title">基本構造 (ChatGPT)</h2>
-            <div class="prompt-card">
-                <h3 class="prompt-title">プロンプト</h3>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')">コピー</button>
-                    <pre id="chatgpt_basic"><code>
+            <div class="prompt-row">
+                <div class="prompt-column">
+                    <div class="prompt-card">
+                        <h3 class="prompt-title">プロンプト</h3>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')">コピー</button>
+                            <pre id="chatgpt_basic"><code>
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
@@ -163,65 +187,75 @@
 どのような形式で出力するか
 例. 分かりやすい日本語でお願いします。
 例. 表として示して下さい。
-                    </code></pre>
+                                </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prompt-row">
+                <div class="prompt-column">
+                    <div class="prompt-card">
+                        <h3 class="prompt-title">学習支援 (ChatGPT)</h3>
+                        <p class="prompt-content">
+                            #設定/役割<br>
+                            あなたは、理学療法および作業療法分野のプロの教育者です。<br>
+                            #依頼内容<br>
+                            以下のステップを順番に実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。<br>
+                            その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。<br>
+                            調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。<br>
+                            #ステップ1：キーワードを入力<br>
+                            最初に、ユーザーに「キーワードを入力してください」と確認してください。<br>
+                            #ステップ2：学生のレベルを選択<br>
+                            次に、ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。<br>
+                            1.「基礎レベル」：基本概念を理解するテーマ<br>
+                            2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ<br>
+                            3.「発展レベル」：最新の研究動向を反映した高度なテーマ<br> 
+                            #ステップ3：調査テーマ、検索クエリを作成<br>
+                            #前提条件<br>
+                            学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。<br>
+                            #出力条件<br> 
+                            検索クリエはコードブロックで出力してください。
+                        </p>
+                        <button class="copy-button" data-prompt="以下の情報をもとに、丁寧なビジネスメールを作成してください。宛先の担当者に失礼のない言葉遣いを心がけてください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                            コピー
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="prompt-card">
-                <h3 class="prompt-title">学習支援 (ChatGPT)</h3>
-                <p class="prompt-content">
-                    #設定/役割<br>
-                    あなたは、理学療法および作業療法分野のプロの教育者です。<br>
-                    #依頼内容<br>
-                    以下のステップを順番に実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。<br>
-                    その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。<br>
-                    調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。<br>
-                    #ステップ1：キーワードを入力<br>
-                    最初に、ユーザーに「キーワードを入力してください」と確認してください。<br>
-                    #ステップ2：学生のレベルを選択<br>
-                    次に、ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。<br>
-                    1.「基礎レベル」：基本概念を理解するテーマ<br>
-                    2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ<br>
-                    3.「発展レベル」：最新の研究動向を反映した高度なテーマ<br> 
-                    #ステップ3：調査テーマ、検索クエリを作成<br>
-                    #前提条件<br>
-                    学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。<br>
-                    #出力条件<br> 
-                    検索クリエはコードブロックで出力してください。
-                </p>
-                <button class="copy-button" data-prompt="以下の情報をもとに、丁寧なビジネスメールを作成してください。宛先の担当者に失礼のない言葉遣いを心がけてください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
-            </div>
-
-            <div class="prompt-card">
-                <h3 class="prompt-title">模擬患者生成 (ChatGPT)</h3>
-                <p class="prompt-content">
-                    #設定/役割<br>
-                    あなたは、医療教育の専門家で、医学生や看護学生が臨床実習で使用する模擬患者シナリオを作成します。<br>
-                    #依頼内容<br>
-                    学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルなシナリオを作成してください。
-                </p>
-                <button class="copy-button" data-prompt="学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルな模擬患者シナリオを作成してください。">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
-            </div>
-
-            <div class="prompt-card">
-                <h3 class="prompt-title">ルーブリック作成 (ChatGPT)</h3>
-                <p class="prompt-content">
-                    #設定/役割<br>
-                   あなたは、医療教育における評価の専門家です。<br>
-                    #依頼内容<br>
-                   医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。<br>
-                   評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。
-                </p>
-                <button class="copy-button" data-prompt="医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
+            <div class="prompt-row">
+                <div class="prompt-column">
+                    <div class="prompt-card">
+                        <h3 class="prompt-title">模擬患者生成 (ChatGPT)</h3>
+                        <p class="prompt-content">
+                            #設定/役割<br>
+                            あなたは、医療教育の専門家で、医学生や看護学生が臨床実習で使用する模擬患者シナリオを作成します。<br>
+                            #依頼内容<br>
+                            学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルなシナリオを作成してください。
+                        </p>
+                        <button class="copy-button" data-prompt="学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルな模擬患者シナリオを作成してください。">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                            コピー
+                        </button>
+                    </div>
+                </div>
+                <div class="prompt-column">
+                    <div class="prompt-card">
+                        <h3 class="prompt-title">ルーブリック作成 (ChatGPT)</h3>
+                        <p class="prompt-content">
+                            #設定/役割<br>
+                            あなたは、医療教育における評価の専門家です。<br>
+                            #依頼内容<br>
+                            医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。<br>
+                            評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。
+                        </p>
+                        <button class="copy-button" data-prompt="医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                            コピー
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
