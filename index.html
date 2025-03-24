@@ -281,23 +281,119 @@
         </div>
 
         <div id="perplexity-prompts" class="prompt-content">
-            <h2 class="prompt-title">Perplexity用プロンプト</h2>
             <div class="prompt-card">
-                <h3 class="prompt-title">学習支援 (Perplexity)</h3>
-                <p class="prompt-content">
-                    あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。<br>
-                    キーワードは「”ここに調べてほしいテーマを入力”」です。学生のレベルは「”ここに学生のレベルを入力（基礎レベル、応用レベル、発展レベルなど）”」です。<br>
-                    キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。<br>
-                    その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コピーができるようコードブロックで出力してください。<br>
-                    また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
-                </p>
-                <button class="copy-button" data-prompt="以下の情報をもとに、情報量の豊富なメールを作成してください。背景情報や関連情報へのリンクを含め、受け手がより深く理解できるように記述してください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
+                <h3 class="prompt-title">論文要約</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('perplexity_prompt')">コピー</button>
+                    <pre id="perplexity_prompt"><code>
+Please explain the "Title", "Methods", "Results", "Limitations", and "Clinical Significance" of “Paper”.
+## Output
+- Please "Methods", "Limitations", and "Clinical Significance" should be output in bulleted, concise form.
+- Please "Results" should be as detailed as possible and output in tabular format.
+- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
+- Please output should be in academic style, and in japanese.
+- Please output as much detail as possible.
+## Paper
+***こちらにURLをコピペしてください***
+                    </code></pre>
+                </div>
             </div>
-        </div>
-    </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">情報検索（情報源を学術データベースに限らない）</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('perplexity_search')">コピー</button>
+                    <pre id="perplexity_search"><code>
+Please research and output the "Research Theme" in a multifaceted and comprehensive manner.
+Please information from the year 2000 onward should be included in the survey.
+## Output
+- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
+- Please output should be in academic style, and in japanese.
+- Please output as much detail as possible.
+## Background
+***背景や目的などがあれば入力してください***
+## Research Theme
+***こちらに調べたい疑問や項目をコピペしてください***
+                    </code></pre>
+                </div>
+            </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">情報を調べたい（情報源を学術データベースに限る）</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('perplexity_search_limited')">コピー</button>
+                    <pre id="perplexity_search_limited"><code>
+Please research and output the “Research Theme” in a multifaceted and comprehensive manner.
+STEP1:
+- Please list as many of the best academic databases in the English-speaking world as possible as sources for researching the “Research Theme”.
+- Please use the academic databases “PubMed”, “EMBASE”, “Cochrane Library”, “PubMed Central”, “Europe PMC”, and “UpToDate” as information sources.
+STEP2:
+Please use the academic databases listed in STEP 1 as your information source, and limit your research to open access scholarly articles and freely available full-text scholarly articles.
+STEP3:
+Please original articles, RCTs, systematic reviews, and meta-analyses published after 2010 should be prioritized for research, and high quality articles in terms of number of citations, impact factor, orthometrics, quality of peer review, academic significance, and validity of research methods should be considered.
+## Prohibited
+The following items are prohibited and must not be done.
+- Please information from blog sites and websites of medical institutions are excluded.
+- Please exclude any paywalled papers or articles that require subscription.
+## Output
+- Please output of STEP1 results is not required.
+- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
+- Please output should be in academic style, and in japanese.
+- Please output as much detail as possible.
+## Background
+***背景や目的などがあれば入力してください***
+## Research Theme
+***こちらに調べたい疑問や項目をコピペしてください***
+                    </code></pre>
+                </div>
+            </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">PICO/PECOから検索</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('perplexity_pico_search')">コピー</button>
+                    <pre id="perplexity_pico_search"><code>
+Please summarize information on the following “PICO/PECO”.
+## Rules
+- Please use the academic databases “PubMed”, “EMBASE”, “Cochrane Library”, “PubMed Central”, “Europe PMC”, and “UpToDate” as information sources.
+- Please use as many open access and freely available full-text academic articles as possible as information sources.
+- Please use original papers, RCTs, systematic reviews, and meta-analyses published after 2020 as information sources..
+## Prohibited
+Please the following items are prohibited and must not be done.
+- Please information from blog sites and websites of medical institutions are excluded.
+- Please exclude any paywalled papers or articles that require subscription.
+## Output
+- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
+- Please output should be in academic style, and in japanese.
+- Please output as much detail as possible.
+## PICO/PECO
+***こちらのPICO/PECOをコピペしてください***
+                    </code></pre>
+                </div>
+            </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">介入研究と観察研究を情報収集</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('intervention_observational_research')">コピー</button>
+                    <pre id="intervention_observational_research"><code>
+Please research and output the “Research Theme” in a multifaceted and comprehensive manner.
+## Rules
+- Please use the academic databases “PubMed”, “EMBASE”, “Cochrane Library”, “PubMed Cetral”, “Europe PMC”, and “UpToDate” as information sources.
+- Please use as many open access and freely available full-text academic articles as possible as information sources.
+- Please use as many original papers, RCTs, systematic reviews, and meta-analyses as possible as information sources.
+## Prohibited
+Please the following items are prohibited and must not be done.
+- Please information from blog sites and websites of medical institutions are excluded.
+- Please exclude any paywalled papers or articles that require subscription.
+## Output
+- Please output results should be thoroughly fact-checked to ensure that there is no halcination.
+- Please output should be in academic style, and in japanese.
+- Please output as much detail as possible.
+## Research Theme
+※介入研究の動向を調べる場合
+Trends in Interventional Research and Observational Research for ***ここに疾患名を入力してください***.
+※観察研究の動向を調べる場合
+Trends in Interventional Research and Observational Research for ***ここに疾患名を入力してください***.
+                    </code></pre>
+                </div>
+            </div>
 
     <script>
         const promptBoxes = document.querySelectorAll('.prompt-box');
