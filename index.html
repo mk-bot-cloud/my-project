@@ -1,113 +1,102 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
-    <title>業務効率化プロンプト集</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI別プロンプト集</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            text-align: center;
+            font-family: 'Inter', sans-serif;
         }
-
-table {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    border-collapse: collapse;
-    table-layout: fixed; /* 各列の幅を均等に固定 */
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    vertical-align: top; /* 上揃えにして高さを揃える */
-    width: 50%;
-    word-wrap: break-word; /* 長い単語の折り返し */
-    overflow-wrap: break-word;
-}
-
-.code-block {
-    background-color: #f5f5f5;
-    position: relative;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 0;
-    min-height: 250px;
-    max-height: 350px; /* 高さを制限 */
-    width: 96%;
-    display: flex;
-    flex-direction: column;
-    overflow: auto; /* はみ出したらスクロール */
-}
-
-textarea {
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    font-family: monospace;
-    border: none;
-    background: transparent;
-    resize: none;
-    outline: none;
-    padding: 4px;
-    box-sizing: border-box;
-    flex-grow: 1;
-    overflow: auto; /* はみ出しを防ぐ */
-}
-
-.copy-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-
-textarea {
-    width: 100%;
-    height: 200px; /* 高さを大きくする */
-    font-size: 14px; /* フォントサイズを大きくして見やすく */
-    font-family: monospace;
-    border: none;
-    background: transparent;
-    resize: none;
-    outline: none;
-    padding: 4px;
-    box-sizing: border-box;
-    flex-grow: 1; /* 高さを可変にして調整 */
-}
-
-.column-title, h4 {
-    margin: 6px 0;
-}
-
-
-
+        .prompt-box {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            border: 2px solid transparent;
+        }
+        .prompt-box:hover {
+            background-color: #f7fafc;
+            border-color: #e2e8f0;
+        }
+        .prompt-box.active {
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .prompt-content {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: none;
+            white-space: pre-line;
+        }
+        .prompt-content.active {
+            display: block;
+        }
+        .copy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .copy-button:hover {
+            background-color: #45a049;
+        }
+        .copy-button:active {
+            background-color: #388e3c;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: translateY(1px);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        #chatgpt-prompts {
+            display: none;
+        }
+        #chatgpt-prompts.active {
+            display: block;
+        }
     </style>
 </head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-4">AI別プロンプト集</h1>
+        <p class="text-gray-600 mb-6">ChatGPT、Gemini、Perplexity、それぞれのAIに最適化されたプロンプト集です。クリックしてプロンプトを表示します。</p>
 
-<body>
-    <h2>業務効率化プロンプト集</h2>
+        <div class="grid-container">
+            <div class="prompt-box" data-target="chatgpt-prompts">ChatGPT用プロンプト</div>
+            <div class="prompt-box" data-target="gemini-prompts">Gemini用プロンプト</div>
+            <div class="prompt-box" data-target="perplexity-prompts">Perplexity用プロンプト</div>
+        </div>
 
-    <table>
-        <tr>
-            <th>chatGPTプロンプト</th>
-            <th>Geminiプロンプト</th>
-        </tr>
-        <tr>
-        <td>
-        <strong>基本構造</strong>
-        <div class="code-block">
-        <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')">コピー</button>
-        <textarea id="chatgpt_basic" readonly>
+        <div id="chatgpt-prompts" class="prompt-content">
+            <h2 class="prompt-title">ChatGPT用プロンプト</h2>
+            <div class="prompt-card">
+                <h3 class="prompt-title">基本構造 (ChatGPT)</h3>
+                <p class="prompt-content">
 #設定/役割
 どのような立場、領域から生成してもらいたいか
 例. あなたはプロの理学療法士です。
@@ -124,259 +113,137 @@ textarea {
 どのような形式で出力するか
 例. 分かりやすい日本語でお願いします。
 例. 表として示して下さい。
-    </textarea>
-                </div>
-            </td>
-            <td>
-                <strong>基本構造</strong>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('gemini_basic')">コピー</button>
-                    <textarea id="gemini_basic" readonly>
-（役割）書き手の設定
-例．あなたは症例検討会のプレゼンテーションの経験が豊富な理学療法士です。
-（コンテキスト）背景や状況
-例．担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
-（タスク）Geminiにしてほしいこと
-例．発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
-（フォーマット）出力形式
-例．発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
-    </textarea>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>学習支援</strong>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('chatgpt_learning')">コピー</button>
-                    <textarea id="chatgpt_learning" readonly>
-#設定/役割
-あなたは、理学療法および作業療法分野のプロの教育者です。
-#依頼内容            
-以下のステップを順番に実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
-その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。
-調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
-#ステップ1：キーワードを入力
-最初に、ユーザーに「キーワードを入力してください」と確認してください。
-#ステップ2：学生のレベルを選択
-次に、ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。
-1.「基礎レベル」：基本概念を理解するテーマ
-2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ
-3.「発展レベル」：最新の研究動向を反映した高度なテーマ 
-#ステップ3：調査テーマ、検索クエリを作成
-#前提条件
-学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。
-#出力条件 
-検索クリエはコードブロックで出力してください。
-    </textarea>
-                </div>
-            </td>
-            <td>
-                <strong>学習支援</strong>
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyToClipboard('gemini_learning')">コピー</button>
-                    <textarea id="gemini_learning" readonly>
-あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
-キーワードは「〇●」です。学生のレベルは「〇●（基礎レベル、応用レベル、発展レベルなど）」です。
-キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
-その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コピーができるようコードブロックで出力してください。
-また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
-    </textarea>
-                </div>
-            </td>
-        </tr>
-<tr>
-    <td>
-        <strong>模擬患者生成</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('chatgpt_patient')">コピー</button>
-            <textarea id="chatgpt_patient" readonly>
-#設定/役割
-あなたはプロの理学療法士または作業療法士です。 
-#依頼内容         
-まず、ユーザーに対して「模擬患者の疾患名を入力してください」と尋ねてください。  
-その後、ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。  
-#前提条件
-##Ⅰ．模擬患者の基本情報
-###1. 症例紹介
-- 年齢:  
-- 性別:  
-- 身長・体重:  
-- 利き手:  
-- 主訴:  
-###2. 医学的情報
-- 疾患名: （ユーザーが入力した疾患を反映）  
-- 発症からの日数:  
-- 障害名:  
-- 現病歴:  
-  - 発症時の症状、診断結果  
-  - 現在の主要な症状・治療経過  
-- 既往歴:（例: 高血圧 / 糖尿病 / 心疾患 など）  
-###3. 社会的情報
-- 家族歴:（例: 親が脳卒中を経験 など）  
-- 発症前の生活:  
-  - 生活状況（例: 仕事の有無、趣味、運動習慣 など）  
-- 生活の特徴:  
-  - 居住環境（例: 戸建て / マンション / 施設）  
-  - 家族構成（例: 配偶者あり / 独居）  
-- 服薬状況:（例: 降圧剤、マドパー錠、NSAIDs など）  
-##Ⅱ．評価結果
-###1. 共通の評価項目
-####身体機能評価
-- 筋力評価: MMT（徒手筋力テスト）、握力  
-- 関節可動域: 主要な関節のROM評価  
-- 基本的動作能力: 自立度、具体的な方法を記載  
-- 歩行機能: 10m歩行テスト、Timed Up & Go（TUG）テスト、6分間歩行テスト  
-- バランス機能: Berg Balance Scale（BBS）  
-- 疼痛評価: Visual Analog Scale（VAS）  
-- 日常生活動作（ADL）: Functional Independence Measure（FIM）  
-####認知機能評価
-- 全般的な認知機能: HDS-R（長谷川式簡易知能評価スケール）、MMSE（Mini-Mental State Examination）  
-- 注意・遂行機能: Trail Making Test（TMT-A/B）  
-##Ⅲ．疾患ごとの評価
-###疾患に応じた特異的評価を自動で生成してください
-疾患ごとに適切な評価を追加してください。以下の例を参考に、自動で評価項目を選択してください。
-####【例】
-- 脳卒中（Stroke）:  
-  - Brunnstrom Recovery Stage（上肢・手指・下肢）  
-  - Modified Ashworth Scale（MAS）  
-- 脊髄小脳変性症（SCD）:
-  - SARA（小脳性運動失調評価）  
-  - 深部腱反射・病的反射  
-  - ロンベルグ徴候  
-- 変形性膝関節症（OA knee）:
-  - KL分類（Kellgren-Lawrence分類）  
-  - 炎症所見  
-  - FTA（大腿脛骨角）、脚長差  
-- 変形性股関節症（OA hip）: 
-  - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
-  - 画像診断（X線所見）  
-  - 炎症所見、脚長差
-#出力条件
-コードブロックで出力してください。
-             </textarea>
+    
+                </p>
+                <button class="copy-button" data-prompt="#設定/役割\nどのような立場、領域から生成してもらいたいか\n例: あなたはプロの理学療法士です。\n例: ここは日本の長崎県にある総合病院です。\n\n#依頼内容\n何を(目的語)、どう(動詞)してもらいたいか\n例: 脳卒中に対する評価指標をアウトカム別にまとめて下さい。\n例: 膝OA者の膝構造を示す骨画像のイラストを出力して下さい。\n\n#前提条件\n想定される聞き手は誰か\n例: 聞き手は、臨床現場で働く理学療法士です。\n例: 聞き手は、専門知識を持たない一般人です。\n\n#出力条件\nどのような形式で出力するか\n例: 分かりやすい日本語でお願いします。\n例: 表として示して下さい。">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
+
+            <div class="prompt-card">
+                <h3 class="prompt-title">学習支援 (ChatGPT)</h3>
+                <p class="prompt-content">
+                    #設定/役割<br>
+                    あなたは、理学療法および作業療法分野のプロの教育者です。<br>
+                    #依頼内容<br>
+                    以下のステップを順番に実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。<br>
+                    その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。<br>
+                    調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。<br>
+                    #ステップ1：キーワードを入力<br>
+                    最初に、ユーザーに「キーワードを入力してください」と確認してください。<br>
+                    #ステップ2：学生のレベルを選択<br>
+                    次に、ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。<br>
+                    1.「基礎レベル」：基本概念を理解するテーマ<br>
+                    2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ<br>
+                    3.「発展レベル」：最新の研究動向を反映した高度なテーマ<br> 
+                    #ステップ3：調査テーマ、検索クエリを作成<br>
+                    #前提条件<br>
+                    学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。<br>
+                    #出力条件<br> 
+                    検索クリエはコードブロックで出力してください。
+                </p>
+                <button class="copy-button" data-prompt="以下の情報をもとに、丁寧なビジネスメールを作成してください。宛先の担当者に失礼のない言葉遣いを心がけてください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
+
+            <div class="prompt-card">
+                <h3 class="prompt-title">模擬患者生成 (ChatGPT)</h3>
+                <p class="prompt-content">
+                    #設定/役割<br>
+                    あなたは、医療教育の専門家で、医学生や看護学生が臨床実習で使用する模擬患者シナリオを作成します。<br>
+                    #依頼内容<br>
+                    学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルなシナリオを作成してください。
+                </p>
+                <button class="copy-button" data-prompt="学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルな模擬患者シナリオを作成してください。">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
+
+            <div class="prompt-card">
+                <h3 class="prompt-title">ルーブリック作成 (ChatGPT)</h3>
+                <p class="prompt-content">
+                    #設定/役割<br>
+                   あなたは、医療教育における評価の専門家です。<br>
+                    #依頼内容<br>
+                   医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。<br>
+                   評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。
+                </p>
+                <button class="copy-button" data-prompt="医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
         </div>
-    </td>
-    <td>
-        <strong>議事録作成（Google AI Studio）→chatGPTで校正</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('minutes_prompt')">コピー</button>
-            <textarea id="minutes_prompt" readonly>
-アップロードしたデータを話者ごとに整理して議事録を作成してください。
-「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
-話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
-            </textarea>
+
+        <div id="gemini-prompts" class="prompt-content">
+            <h2 class="prompt-title">Gemini用プロンプト</h2>
+            <div class="prompt-card">
+                <h3 class="prompt-title">基本構造 (Gemini)</h3>
+                <p class="prompt-content">
+                    （役割）書き手の設定<br>
+                    例．あなたは症例検討会のプレゼンテーションの経験が豊富な理学療法士です。<br>
+                    （コンテキスト）背景や状況<br>
+                    例．担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。<br>
+                    （タスク）Geminiにしてほしいこと<br>
+                    例．発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。<br>
+                    （フォーマット）出力形式<br>
+                    例．発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
+                </p>
+                <button class="copy-button" data-prompt="以下の情報をもとに、効率的なビジネスメールを作成してください。必要な情報が網羅され、かつ簡潔にまとめられていることが重要です。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
         </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <strong>ルーブリック</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('chatgpt_osce')">コピー</button>
-            <textarea id="chatgpt_osce" readonly>
-#設定/役割
-あなたは理学療法および作業療法分野の教育者であり、OSCE（客観的臨床能力試験）の評価を行う教員です。
-#依頼内容
-以下の観点で評価し、OSCEの採点基準としてルーブリックを作成してください。
-1.基礎知識の活用：解剖・生理・運動学の知識を適切に応用し、評価や治療の根拠を説明できるか。
-2.評価・治療の手順：患者の状態に応じた適切な評価・治療計画を立案し、論理的に実施できるか。
-3.技術の正確性：関節可動域測定、筋力評価、治療手技などが正確かつ適切に行えるか。
-4.安全管理：患者の安全を確保し、不適切な動作やリスクのある対応をしていないか。
-5.コミュニケーション能力：患者に適切な声掛けを行い、安心感を与える説明ができるか。
-#前提条件
-評価対象は、OSCE試験を受験する理学療法・作業療法の学生です。
-ルーブリックは、客観的かつ公平な評価ができるように作成してください。
-#出力条件
-表として示してください。
-評価基準は以下の4段階で作成してください。
-- A（優れている）
-- B（標準的）
-- C（改善が必要）
-- D（不十分）
-            </textarea>
+
+        <div id="perplexity-prompts" class="prompt-content">
+            <h2 class="prompt-title">Perplexity用プロンプト</h2>
+            <div class="prompt-card">
+                <h3 class="prompt-title">学習支援 (Perplexity)</h3>
+                <p class="prompt-content">
+                    あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。<br>
+                    キーワードは「”ここに調べてほしいテーマを入力”」です。学生のレベルは「”ここに学生のレベルを入力（基礎レベル、応用レベル、発展レベルなど）”」です。<br>
+                    キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。<br>
+                    その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コピーができるようコードブロックで出力してください。<br>
+                    また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
+                </p>
+                <button class="copy-button" data-prompt="以下の情報をもとに、情報量の豊富なメールを作成してください。背景情報や関連情報へのリンクを含め、受け手がより深く理解できるように記述してください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
+                    コピー
+                </button>
+            </div>
         </div>
-    </td>
-    <td>
-                <strong>論文Interpreter</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('gemini Interpreter')">コピー</button>
-            <textarea id="gemini Interpreter" readonly>
-あなたは学術論文の専門解説者であり、特に医学、工学、社会科学の分野に精通した研究者です。
-ユーザーは、研究や学習のためにPDF形式の学術論文をアップロードします。  
-論文の内容を正確に把握し、専門用語や統計データ、研究手法を理解しやすい形で整理することが求められています。  
-また、図表やグラフを含む場合は、それらの情報が示す内容や意義を適切に解説する必要があります。  
-アップロードされたPDF論文を解析し、以下の項目ごとに整理して解説してください。  
-1. 論文の基本情報（タイトル・著者・掲載誌・発表年）  
-2. 背景と目的（研究の意義・課題）  
-3. 研究方法（データ・実験・解析手法）  
-4. 結果と考察（主要な発見・統計データ・解釈）  
-5. 結論（研究のまとめ・今後の課題）  
-6. 図表の解説（グラフ・表の内容説明）  
-7. 実用的応用（臨床・実務での活用）  
-必要に応じてOCRを活用して画像内の文字を取得し、指定されたページ範囲のみを解析してください。  
-情報を整理し、わかりやすく提示するために、文章を簡潔に構成し、論理的に整理してください。
-重要なポイントは適切に強調し、図表の説明は具体的かつ簡潔に記載してください。  
-          </textarea>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <strong>論文Interpreter</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('chatgpt Interpreter')">コピー</button>
-            <textarea id="chatgpt Interpreter" readonly>
-#設定/役割  
-あなたは学術論文の専門解説者であり、特に医学・工学・社会科学の分野に精通した研究者です。 
-#依頼内容  
-ユーザーがアップロードしたPDF論文を解析し、指定の項目ごとに整理してください。
-専門用語や統計データ、研究方法について詳細に説明し、必要に応じて簡潔な要約や補足解説を提供してください。  
-また、視覚的な情報（図・表・グラフ）の分析を行い、それらが示す内容や意義を明確に伝えてください。  
-さらに、OCRを活用して画像内の文字を取得し、必要に応じて指定されたページ範囲のみを解析してください。
-1. 論文の基本情報（タイトル・著者・掲載誌・発表年）  
-2. 背景と目的（研究の意義・課題）  
-3. 研究方法（データ・実験・解析手法）  
-4. 結果と考察（主要な発見・統計データ・解釈）  
-5. 結論（研究のまとめ・今後の課題）  
-6. 図表の解説（グラフ・表の内容説明）  
-7. 実用的応用（臨床・実務での活用）  
-#前提条件  
-日本語および英語のPDF論文を解析してください。解析の際には、専門用語に適切な説明を加えて解説してください。
-また、必要に応じて、専門知識のない読者でも理解しやすいように言い換えを行い、論文の内容を明確に伝えてください。
-#出力条件  
-箇条書きや表を使用して情報を整理し、わかりやすく提示してください。
-また、重要なポイントは太字（**）を用いて強調し、図表の説明は簡潔かつ具体的に記載してください。 
-            </textarea>
-        </div>
-    </td>
-    <td>
-                <strong>議事録内容の整理（Google AI Studio）</strong>
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyToClipboard('minutes_promptr2')">コピー</button>
-            <textarea id="minutes_promptr2" readonly>
-形式を整えた上で、この会議をまとめた議事録にしてください。
-作成するときは、必ず以下の項目に分けてください。
-#出席者
-#議題
-#概要
-#決定事項
-            </textarea>
-        </div>
-    </td>
-    <td>
-        
-                
-    </table>
+    </div>
 
     <script>
-        function copyToClipboard(elementId) {
-            const textarea = document.getElementById(elementId);
-            textarea.select();
-            textarea.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-        }
+        const promptBoxes = document.querySelectorAll('.prompt-box');
+        const promptContents = document.querySelectorAll('.prompt-content');
+        const copyButtons = document.querySelectorAll('.copy-button');
+
+        promptBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const targetId = box.getAttribute('data-target');
+                promptBoxes.forEach(b => b.classList.remove('active'));
+                promptContents.forEach(c => c.classList.remove('active'));
+                box.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const promptText = button.getAttribute('data-prompt');
+                navigator.clipboard.writeText(promptText).then(() => {
+                    // コピー成功時の処理
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
     </script>
 </body>
-
 </html>
