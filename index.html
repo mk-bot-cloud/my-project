@@ -161,129 +161,143 @@
         <p class="text-gray-600 mb-6">ChatGPT、Gemini、Perplexity、それぞれのAIに最適化されたプロンプト集です。クリックしてプロンプトを表示します。</p>
 
         <div class="grid-container">
-            <div class="prompt-box" data-target="chatgpt-prompts">ChatGPT用プロンプト</div>
-            <div class="prompt-box" data-target="gemini-prompts">Gemini用プロンプト</div>
-            <div class="prompt-box" data-target="perplexity-prompts">Perplexity用プロンプト</div>
+            <div class="prompt-box" data-target="chatgpt-prompts">ChatGPT</div>
+            <div class="prompt-box" data-target="gemini-prompts">Gemini</div>
+            <div class="prompt-box" data-target="perplexity-prompts">Perplexity</div>
         </div>
 
         <div id="chatgpt-prompts" class="prompt-content">
-            <h2 class="prompt-title">基本構造 (ChatGPT)</h2>
-            <div class="prompt-row">
-                <div class="prompt-column">
-                    <div class="prompt-card">
-                        <h3 class="prompt-title">プロンプト</h3>
+            <div class="prompt-card">
+                        <h3 class="prompt-title">基本構造</h3>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')">コピー</button>
                             <pre id="chatgpt_basic"><code>
 #設定/役割
-どのような立場、領域から生成してもらいたいか
-例. あなたはプロの理学療法士です。
-例. ここは日本の長崎県にある総合病院です。
+どのような立場、領域から生成してもらいたいか（例. あなたはプロの理学療法士です。ここは日本の長崎県にある総合病院です。）
 #依頼内容
-何を(目的語)、どう(動詞)してもらいたいか
-例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。
-例. 膝OA者の膝構造を示す骨画像のイラストを出力して下さい。
+何を(目的語)、どう(動詞)してもらいたいか（例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。膝OA者の膝構造を示す骨画像のイラストを出力して下さい。）
 #前提条件
-想定される聞き手は誰か
-例. 聞き手は、臨床現場で働く理学療法士です。
-例. 聞き手は、専門知識を持たない一般人です。
+想定される聞き手は誰か（例. 聞き手は、臨床現場で働く理学療法士です。聞き手は、専門知識を持たない一般人です。）
 #出力条件
-どのような形式で出力するか
-例. 分かりやすい日本語でお願いします。
-例. 表として示して下さい。
-                                </code></pre>
-                        </div>
-                    </div>
+どのような形式で出力するか（例. 分かりやすい日本語でお願いします。表として示して下さい。）
+  </code></pre>
                 </div>
             </div>
-            <div class="prompt-row">
-                <div class="prompt-column">
-                    <div class="prompt-card">
-                        <h3 class="prompt-title">学習支援 (ChatGPT)</h3>
-                        <p class="prompt-content">
-                            #設定/役割<br>
-                            あなたは、理学療法および作業療法分野のプロの教育者です。<br>
-                            #依頼内容<br>
-                            以下のステップを順番に実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。<br>
-                            その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用してください。<br>
-                            調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。<br>
-                            #ステップ1：キーワードを入力<br>
-                            最初に、ユーザーに「キーワードを入力してください」と確認してください。<br>
-                            #ステップ2：学生のレベルを選択<br>
-                            次に、ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。<br>
-                            1.「基礎レベル」：基本概念を理解するテーマ<br>
-                            2.「応用レベル」：文献検索を活用し、より具体的な研究テーマ<br>
-                            3.「発展レベル」：最新の研究動向を反映した高度なテーマ<br> 
-                            #ステップ3：調査テーマ、検索クエリを作成<br>
-                            #前提条件<br>
-                            学生の理解度に応じて、調査テーマの難易度や内容を工夫してください。<br>
-                            #出力条件<br> 
-                            検索クリエはコードブロックで出力してください。
-                        </p>
-                        <button class="copy-button" data-prompt="以下の情報をもとに、丁寧なビジネスメールを作成してください。宛先の担当者に失礼のない言葉遣いを心がけてください。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                            コピー
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prompt-row">
-                <div class="prompt-column">
-                    <div class="prompt-card">
-                        <h3 class="prompt-title">模擬患者生成 (ChatGPT)</h3>
-                        <p class="prompt-content">
-                            #設定/役割<br>
-                            あなたは、医療教育の専門家で、医学生や看護学生が臨床実習で使用する模擬患者シナリオを作成します。<br>
-                            #依頼内容<br>
-                            学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルなシナリオを作成してください。
-                        </p>
-                        <button class="copy-button" data-prompt="学生が実際の臨床現場で遭遇する可能性の高い疾患や状況を想定し、効果的な学習ができるように詳細でリアルな模擬患者シナリオを作成してください。">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                            コピー
-                        </button>
-                    </div>
-                </div>
-                <div class="prompt-column">
-                    <div class="prompt-card">
-                        <h3 class="prompt-title">ルーブリック作成 (ChatGPT)</h3>
-                        <p class="prompt-content">
-                            #設定/役割<br>
-                            あなたは、医療教育における評価の専門家です。<br>
-                            #依頼内容<br>
-                            医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。<br>
-                            評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。
-                        </p>
-                        <button class="copy-button" data-prompt="医学生や看護学生の臨床能力を評価するためのルーブリックを作成します。評価項目、評価基準、評価尺度を明確に定義し、学生の達成度を客観的に評価できるルーブリックを作成してください。">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                            コピー
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="gemini-prompts" class="prompt-content">
-            <h2 class="prompt-title">Gemini用プロンプト</h2>
             <div class="prompt-card">
-                <h3 class="prompt-title">基本構造 (Gemini)</h3>
-                <p class="prompt-content">
-                    （役割）書き手の設定<br>
-                    例．あなたは症例検討会のプレゼンテーションの経験が豊富な理学療法士です。<br>
-                    （コンテキスト）背景や状況<br>
-                    例．担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。<br>
-                    （タスク）Geminiにしてほしいこと<br>
-                    例．発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。<br>
-                    （フォーマット）出力形式<br>
-                    例．発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。
-                </p>
-                <button class="copy-button" data-prompt="以下の情報をもとに、効率的なビジネスメールを作成してください。必要な情報が網羅され、かつ簡潔にまとめられていることが重要です。\n\n件名: 【件名】\n宛先: 【宛先】\n本文:\n【本文】">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 0 0 1 2-2h9a2 0 0 1 2 2v1"/></svg>
-                    コピー
-                </button>
+                <h3 class="prompt-title">学習支援</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('学習支援)">コピー</button>
+                    <pre id="学習支援"><code>
+あなたは、理学療法および作業療法分野のプロの教育者です。
+以下のステップを実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
+調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
+#ステップ1：キーワードを入力
+ユーザーに「キーワードを入力してください」と確認してください。
+#ステップ2：学生のレベルを選択
+ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。
+1. **「基礎レベル」** 基本概念を理解するテーマ
+2. **「応用レベル」** 文献検索を活用し、より具体的な研究テーマ
+3. **「発展レベル」** 最新の研究動向を反映した高度なテーマ 
+#ステップ3：調査テーマ、検索クエリを作成
+#出力条件 
+・コードブロックで出力してください。
+ </code></pre>
+                </div>
             </div>
-        </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">模擬患者生成</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('模擬患者生成')">コピー</button>
+                    <pre id="模擬患者生成"><code>
+あなたはプロの理学療法士または作業療法士です。  
+ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。  
+コードブロックで出力してください。  
 
+## ステップ1：発症・手術からの期間を選択
+ユーザーに「模擬患者の発症、または手術からの期間を選択してください」と確認し、以下の選択肢を提示してください。
+1. 30日未満  
+2. 30～90日  
+3. 90～180日  
+4. 180日以上 
+
+## ステップ2：年代の選択
+ユーザーに「模擬患者の年代を選択してください」と確認し、以下の選択肢を提示してください。
+
+1. 60歳未満  
+2. 60～74歳  
+3. 75～90歳  
+4. 90歳以上  
+
+## Ⅰ．模擬患者の基本情報
+### 1. 症例紹介
+- 年齢:  
+- 性別:  
+- 身長・体重:  
+- 利き手:  
+- 主訴:  
+
+### 2. 医学的情報
+- 疾患名: （ユーザーが入力した疾患を反映）  
+- 発症からの日数:  
+- 障害名:  
+- 現病歴:  
+  - 発症時の症状、診断結果  
+  - 現在の主要な症状・治療経過  
+- 既往歴:（例: 高血圧 / 糖尿病 / 心疾患 など）  
+
+### 3. 社会的情報
+- 家族歴:（例: 親が脳卒中を経験 など）  
+- 発症前の生活:  
+  - 生活状況（例: 仕事の有無、趣味、運動習慣 など）  
+- 生活の特徴:  
+  - 居住環境（例: 戸建て / マンション / 施設）  
+  - 家族構成（例: 配偶者あり / 独居）  
+- 服薬状況:（例: 降圧剤、マドパー錠、NSAIDs など）  
+
+## Ⅱ．評価結果
+### 1. 共通の評価項目
+#### 身体機能評価
+- 筋力評価: MMT（徒手筋力テスト）、握力  
+- 関節可動域: 主要な関節のROM評価  
+- 基本的動作能力: 自立度、具体的な方法を記載  
+- 歩行機能: 10m歩行テスト、Timed Up & Go（TUG）テスト、6分間歩行テスト  
+- バランス機能: Berg Balance Scale（BBS）  
+- 疼痛評価: Visual Analog Scale（VAS）  
+- 日常生活動作（ADL）: Functional Independence Measure（FIM）  
+
+#### 認知機能評価
+- 全般的な認知機能: HDS-R（長谷川式簡易知能評価スケール）、MMSE（Mini-Mental State Examination）  
+- 注意・遂行機能: Trail Making Test（TMT-A/B）  
+
+## Ⅲ．疾患ごとの評価
+### 疾患に応じた特異的評価を自動で生成してください
+疾患ごとに適切な評価を追加してください。以下の例を参考に、自動で評価項目を選択してください。
+
+#### 【例】
+- **脳卒中（Stroke）:**  
+  - Brunnstrom Recovery Stage（上肢・手指・下肢）  
+  - Modified Ashworth Scale（MAS）  
+
+- **脊髄小脳変性症（SCD）:**  
+  - SARA（小脳性運動失調評価）  
+  - 深部腱反射・病的反射  
+  - ロンベルグ徴候  
+
+- **変形性膝関節症（OA knee）:**  
+  - KL分類（Kellgren-Lawrence分類）  
+  - 炎症所見  
+  - FTA（大腿脛骨角）、脚長差  
+
+- **変形性股関節症（OA hip）:**  
+  - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
+  - 画像診断（X線所見）  
+  - 炎症所見、脚長差
+
+
+                                
+
+
+                                
         <div id="perplexity-prompts" class="prompt-content">
             <div class="prompt-card">
                 <h3 class="prompt-title">論文要約</h3>
