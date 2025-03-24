@@ -120,6 +120,33 @@
 例. 表として示して下さい。
     </div>
 </div>
+    <script>
+        const promptBoxes = document.querySelectorAll('.prompt-box');
+        const promptContents = document.querySelectorAll('.prompt-content');
+        const copyButtons = document.querySelectorAll('.copy-button');
 
+        promptBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const targetId = box.getAttribute('data-target');
+                promptBoxes.forEach(b => b.classList.remove('active'));
+                promptContents.forEach(c => c.classList.remove('active'));
+                box.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const promptText = button.getAttribute('data-prompt');
+                navigator.clipboard.writeText(promptText).then(() => {
+                    // コピー成功時の処理
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
        
 </html>
