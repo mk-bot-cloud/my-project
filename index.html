@@ -92,54 +92,33 @@
             <div class="prompt-box" data-target="perplexity-prompts">Perplexity用プロンプト</div>
         </div>
 
-        <div id="chatgpt-prompts" class="prompt-content active">
+<div class="prompt-card bg-gray-50 border border-gray-300 rounded relative p-4 mb-6 text-sm leading-relaxed">
+    <div class="flex justify-between items-start mb-2">
+        <h2 class="text-base font-semibold">基本構造 (ChatGPT)</h2>
+        <button class="copy-button px-3 py-1 text-sm" onclick="copyToClipboard('prompt-basic')">📋 コピー</button>
+    </div>
 
-    <!-- プロンプト1 -->
-    <div class="mb-8">
-        <h2 class="text-lg font-semibold mb-2">基本構造 (ChatGPT)</h2>
-        <div id="prompt-basic" class="bg-gray-50 p-4 rounded border border-gray-300 whitespace-pre-line">
-#設定/役割
-どのような立場、領域から生成してもらいたいか
-例. あなたはプロの理学療法士です。
-例. ここは日本の長崎県にある総合病院です。
+    <div id="prompt-basic" class="whitespace-pre-line text-gray-800">
+#設定/役割  
+どのような立場、領域から生成してもらいたいか  
+例. あなたはプロの理学療法士です。  
+例. ここは日本の長崎県にある総合病院です。  
 
-#依頼内容
-何を(目的語)、どう(動詞)してもらいたいか
-例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。
-例. 膝OA者の膝構造を示す骨画像のイラストを出力して下さい。
+#依頼内容  
+何を（目的語）、どう（動詞）してもらいたいか  
+例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。  
+例. 膝OA者の膝構造を示す骨画像のイラストを出力して下さい。  
 
-#前提条件
-想定される聞き手は誰か
-例. 聞き手は、臨床現場で働く理学療法士です。
-例. 聞き手は、専門知識を持たない一般人です。
+#前提条件  
+想定される聞き手は誰か  
+例. 聞き手は、臨床現場で働く理学療法士です。  
+例. 聞き手は、専門知識を持たない一般人です。  
 
-#出力条件
-どのような形式で出力するか
-例. 分かりやすい日本語でお願いします。
+#出力条件  
+どのような形式で出力するか  
+例. 分かりやすい日本語でお願いします。  
 例. 表として示して下さい。
-        </div>
-        <button class="copy-button" onclick="copyToClipboard('prompt-basic')">📋 コピー</button>
     </div>
-
-    <!-- プロンプト2 -->
-    <div class="mb-8">
-        <h2 class="text-lg font-semibold mb-2">学習支援 (ChatGPT)</h2>
-        <div id="prompt-learning" class="bg-gray-50 p-4 rounded border border-gray-300 whitespace-pre-line">
-#設定/役割
-あなたは教育者です。ChatGPTを使って学習支援を行います。
-
-#依頼内容
-学生に理解しやすいように、苦手分野の解説と例題を出力してください。
-
-#前提条件
-聞き手は高校生レベルの知識を持っています。
-
-#出力条件
-簡潔かつ分かりやすく。図表やステップ形式で出力してください。
-        </div>
-        <button class="copy-button" onclick="copyToClipboard('prompt-learning')">📋 コピー</button>
-    </div>
-
 </div>
 
        
