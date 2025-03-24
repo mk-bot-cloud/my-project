@@ -279,11 +279,38 @@
   - CE角（臼蓋形成不全）、Sharp角、AHI（Acetabular Head Index）  
   - 画像診断（X線所見）  
   - 炎症所見、脚長差
-      </code></pre>
+ </code></pre>
+                </div>
+            </div>
+            <div class="prompt-card">
+                <h3 class="prompt-title">ルーブリック作成</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('chatGPTルーブリック')">コピー</button>
+                    <pre id="chatGPTルーブリック"><code>
+#設定/役割
+あなたは理学療法および作業療法分野の教育者であり、OSCE（客観的臨床能力試験）の評価を行う教員です。
+#依頼内容
+以下の観点で評価し、OSCEの採点基準としてルーブリックを作成してください。
+1.基礎知識の活用：解剖・生理・運動学の知識を適切に応用し、評価や治療の根拠を説明できるか。
+2.評価・治療の手順：患者の状態に応じた適切な評価・治療計画を立案し、論理的に実施できるか。
+3.技術の正確性：関節可動域測定、筋力評価、治療手技などが正確かつ適切に行えるか。
+4.安全管理：患者の安全を確保し、不適切な動作やリスクのある対応をしていないか。
+5.コミュニケーション能力：患者に適切な声掛けを行い、安心感を与える説明ができるか。
+#前提条件
+評価対象は、OSCE試験を受験する理学療法・作業療法の学生です。
+ルーブリックは、客観的かつ公平な評価ができるように作成してください。
+#出力条件
+表として示してください。
+評価基準は以下の4段階で作成してください。
+- A（優れている）
+- B（標準的）
+- C（改善が必要）
+- D（不十分）
+</code></pre>
     </div> 
   </div> 
 </div> 
- <div id="gemini-prompts" class="prompt-content">
+        <div id="gemini-prompts" class="prompt-content">
             <div class="prompt-card">
                         <h3 class="prompt-title">基本構造</h3>
                         <div class="code-block">
@@ -306,11 +333,21 @@
 キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
 その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コードブロックで出力してください。
 また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。
-           </code></pre>
+   </code></pre>
+                </div>
+            </div>
+  <div class="prompt-card">
+                <h3 class="prompt-title">議事録作成（Google AI studio）</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('議事録Google AI studio')">コピー</button>
+                    <pre id="議事録Google AI studio"><code>
+アップロードしたデータを話者ごとに整理して議事録を作成してください。
+「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
+話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。
+</code></pre>
     </div> 
   </div> 
 </div> 
-
 <div id="perplexity-prompts" class="prompt-content">
             <div class="prompt-card">
                 <h3 class="prompt-title">基本構造（※「設定」の「プロフィール」の最上段欄にコピペ）</h3>
