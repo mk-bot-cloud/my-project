@@ -673,31 +673,19 @@ Please revise the “Text” with reference to the feedback from STEP1.
             });
         });
 
-  const copyButtons = document.querySelectorAll('.copy-button');
-
-  copyButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const targetId = button.getAttribute('data-target'); // どの要素をコピーするか取得
-      const promptText = document.getElementById(targetId)?.textContent;
-
-      if (promptText) {
-        navigator.clipboard.writeText(promptText).then(() => {
-          showCopyToast(); // トースト通知表示（関数は別で定義）
-        }).catch(err => {
-          console.error('コピーに失敗しました:', err);
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const promptText = document.getElementById('chatgpt_basic').textContent;
+                navigator.clipboard.writeText(promptText).then(() => {
+                    // コピー成功時の処理（例：トースト通知を表示）
+                    alert('コピーしました！'); // シンプルなアラート表示
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('コピーに失敗しました。');
+                });
+            });
         });
-      }
-    });
-  });
-
-  function showCopyToast() {
-    const toast = document.getElementById('copy-toast');
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2000);
-  }
-</script>
+    </script>
 </body>
 </html>
 
