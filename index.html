@@ -163,7 +163,7 @@
     <h1 class="text-2xl font-semibold text-gray-800 mb-4">AI別プロンプト集</h1>
     <p class="text-gray-600 mb-6">ChatGPT、Gemini、Perplexity、それぞれのAIに最適化されたプロンプト集です。クリックしてプロンプトを表示します。</p>
 
-    <!-- 表：少し小さく & 余白追加 -->
+    <!-- 表 -->
     <div class="overflow-x-auto mb-10">
       <table class="min-w-full bg-white border border-gray-300 text-sm">
         <thead class="bg-gray-200 text-gray-700">
@@ -216,14 +216,15 @@
       </table>
     </div>
 
-    <!-- ボタン選択肢（例） -->
-    <div class="flex flex-wrap gap-4 justify-center">
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">ChatGPT</button>
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Gemini</button>
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Perplexity</button>
+    <!-- 大きな選択肢ボタンのみ表示 -->
+    <div class="flex flex-col items-center gap-6">
+      <button class="w-full max-w-xl px-6 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800 text-lg">ChatGPT</button>
+      <button class="w-full max-w-xl px-6 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800 text-lg">Gemini</button>
+      <button class="w-full max-w-xl px-6 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800 text-lg">Perplexity</button>
     </div>
   </div>
 </body>
+
 
 
 
