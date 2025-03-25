@@ -170,8 +170,7 @@
   <button class="copy-button" onclick="copyToClipboard('prompt1')">コピー</button>
 <pre id="prompt1" style="display:none"><code>ここがコピー対象です。</code></pre>
 
-
- <script>
+    <script>
         function copyToClipboard(elementId) {
             const textToCopy = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(textToCopy).then(() => {
