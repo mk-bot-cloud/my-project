@@ -1,175 +1,149 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI別プロンプト集</title>
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .prompt-box {
-      background-color: white;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #1f2937;
-      border: 2px solid transparent;
-    }
-    .prompt-box:hover {
-      background-color: #f7fafc;
-      border-color: #e2e8f0;
-    }
-    .prompt-box.active {
-      background-color: #edf2f7;
-      border-color: #cbd5e0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .prompt-content {
-      background-color: white;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      display: none;
-      white-space: pre-line;
-    }
-    .prompt-content.active {
-      display: block;
-    }
-    .copy-button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.375rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    .copy-button:hover {
-      background-color: #45a049;
-    }
-    .copy-button:active {
-      background-color: #388e3c;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      transform: translateY(1px);
-    }
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    #chatgpt-prompts {
-      display: none;
-    }
-    #chatgpt-prompts.active {
-      display: block;
-    }
-    .code-block {
-      background-color: #f5f5f5;
-      color: #333;
-      padding: 8px 12px;
-      border-radius: 5px;
-      font-family: "Courier New", monospace;
-      text-align: left;
-      position: relative;
-      width: 100%;
-      margin: 10px auto;
-      overflow-x: auto;
-      border: 1px solid #ddd;
-    }
-    .code-block pre {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.9rem;
-      line-height: 1.4rem;
-      color: #1f2937;
-      margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .copy-btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.375rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 0.875rem;
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-    .copy-btn:hover {
-      background-color: #45a049;
-    }
-    .copy-btn:active {
-      background-color: #388e3c;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      transform: translateY(1px);
-    }
-    .prompt-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    .prompt-column {
-      width: 50%;
-      padding-right: 1.5rem;
-    }
-    .prompt-row {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      margin-bottom: 0.75rem;
-    }
-    .prompt-card {
-      margin-bottom: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI別プロンプト集</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .prompt-box {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            border: 2px solid transparent;
+        }
+        .prompt-box:hover {
+            background-color: #f7fafc;
+            border-color: #e2e8f0;
+        }
+        .prompt-box.active {
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .prompt-content {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: none;
+            white-space: pre-line;
+        }
+        .prompt-content.active {
+            display: block;
+        }
+        .copy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .copy-button:hover {
+            background-color: #45a049;
+        }
+        .copy-button:active {
+            background-color: #388e3c;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: translateY(1px);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        #chatgpt-prompts {
+            display: none;
+        }
+        #chatgpt-prompts.active {
+            display: block;
+        }
+        .code-block {
+            background-color: #f5f5f5; /* 薄いグレー */
+            color: #333; /* 文字色 */
+            padding: 8px 12px; 
+            border-radius: 5px;
+            font-family: "Courier New", monospace;
+            text-align: left;
+            position: relative;
+            width: 100%;
+            margin: 10px auto;
+            overflow-x: auto;
+            border: 1px solid #ddd; /* 枠線 */
+        }
+.code-block pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+    color: #1f2937;
+    margin: 0;
+    white-space: pre-wrap;  /* ← 折り返しを許可する */
+    word-break: break-word; /* ← 長い英単語も折り返す（任意） */
+}
+        .copy-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.875rem;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+        .copy-btn:active {
+            background-color: #388e3c;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: translateY(1px);
+        }
 
-    /* トースト通知（上部表示） */
-    #copy-toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 9999;
-    }
-    #copy-toast.show {
-      opacity: 1;
-    }
-  </style>
-</head>
-<body>
+        /* 2列レイアウトのためのスタイル */
+        .prompt-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .prompt-column {
+            width: 50%;
+            padding-right: 1.5rem; /* 列間のギャップ */
+        }
+.prompt-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 0.75rem; /* 縦の間隔を狭く */
+        }
+        .prompt-card {
+            margin-bottom: 0;
+        }
 
-  <!-- トースト通知 -->
-  <div id="copy-toast">コピーしました！</div>
-
-  <!-- コピー対象とボタン -->
-  <button class="copy-button" onclick="copyToClipboard('prompt1')">コピー</button>
-<pre id="prompt1" style="display:none"><code>ここがコピー対象です。</code></pre>
-
+    </style>
     <script>
         function copyToClipboard(elementId) {
             const textToCopy = document.getElementById(elementId).textContent;
@@ -181,7 +155,35 @@
                 alert('コピーに失敗しました。');
             });
         }
-    </style>
+    </script>
+
+    <script>
+        const promptBoxes = document.querySelectorAll('.prompt-box');
+        const promptContents = document.querySelectorAll('.prompt-content');
+        const copyButtons = document.querySelectorAll('.copy-button');
+
+        promptBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const targetId = box.getAttribute('data-target');
+                promptBoxes.forEach(b => b.classList.remove('active'));
+                promptContents.forEach(c => c.classList.remove('active'));
+                box.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const promptText = document.getElementById('chatgpt_basic').textContent;
+                navigator.clipboard.writeText(promptText).then(() => {
+                    // コピー成功時の処理（例：トースト通知を表示）
+                    alert('コピーしました！'); // シンプルなアラート表示
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('コピーに失敗しました。');
+                });
+            });
+        });
     </script>
 
 </head>
