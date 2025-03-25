@@ -215,13 +215,11 @@
         </tbody>
       </table>
     </div>
-    <div class="flex flex-wrap gap-4 justify-center">
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">ChatGPT</button>
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Gemini</button>
-      <button class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Perplexity</button>
+    <div class="flex flex-wrap gap-4 justify-center mb-6">
+      <button onclick="showPrompt('chatgpt-prompts')" class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">ChatGPT</button>
+      <button onclick="showPrompt('gemini-prompts')" class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Gemini</button>
+      <button onclick="showPrompt('perplexity-prompts')" class="px-8 py-4 bg-white rounded-xl shadow-md font-semibold text-gray-800">Perplexity</button>
     </div>
-  </div>
-</body>
 
         <div id="chatgpt-prompts" class="prompt-content">
             <div class="prompt-card">
