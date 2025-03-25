@@ -171,24 +171,18 @@
 <pre id="prompt1" style="display:none"><code>ここがコピー対象です。</code></pre>
 
 
-  <script>
-    function showCopyToast() {
-      const toast = document.getElementById('copy-toast');
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2000); // 2秒後に自動で消える
-    }
-
-    function copyToClipboard(elementId) {
-      const textToCopy = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        showCopyToast(); // トースト通知を表示
-      }).catch(err => {
-        console.error('コピーに失敗しました:', err);
-      });
-    }
-  </script>
+ <script>
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // コピー成功時の処理（例：トースト通知を表示）
+                alert('コピーしました！'); // シンプルなアラート表示
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('コピーに失敗しました。');
+            });
+        }
+    </script>
 
 </head>
 <body class="bg-gray-100 p-6">
