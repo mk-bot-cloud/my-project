@@ -94,10 +94,12 @@
         }
 .code-block pre {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
     line-height: 1.4rem;
     color: #1f2937;
     margin: 0;
+    white-space: pre-wrap;  /* ← 折り返しを許可する */
+    word-break: break-word; /* ← 長い英単語も折り返す（任意） */
 }
         .copy-btn {
             background-color: #4CAF50;
