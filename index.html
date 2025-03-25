@@ -144,18 +144,15 @@
         }
 
     </style>
-    <script>
-        function copyToClipboard(elementId) {
-            const textToCopy = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // コピー成功時の処理（例：トースト通知を表示）
-                alert('コピーしました！'); // シンプルなアラート表示
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('コピーに失敗しました。');
-            });
-        }
-    </script>
+   <script>
+    function copyToClipboard(elementId) {
+        const textToCopy = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(textToCopy).catch(err => {
+            console.error('コピーに失敗しました:', err);
+        });
+    }
+</script>
+
 </head>
 <body class="bg-gray-100 p-6">
     <div class="max-w-7xl mx-auto">
