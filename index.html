@@ -6,98 +6,364 @@
     <title>AI別プロンプト集</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        .prompt-box {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1f2937;
-            border: 2px solid transparent;
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .prompt-box:hover {
-            background-color: #f7fafc;
-            border-color: #e2e8f0;
+        .card-hover {
+            transition: all 0.3s ease;
         }
-        .prompt-box.active {
-            background-color: #edf2f7;
-            border-color: #cbd5e0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-        .prompt-content {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            display: none;
-            white-space: pre-line;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
         }
-        .prompt-content.active {
-            display: block;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .copy-button {
-            background-color: #4CAF50;
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4CAF50;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
         }
-        .copy-button:hover {
-            background-color: #45a049;
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .copy-button:active {
-            background-color: #388e3c;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            transform: translateY(1px);
+        .search-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        #chatgpt-prompts {
-            display: none;
-        }
-        #chatgpt-prompts.active {
-            display: block;
+        .search-input:focus {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
         }
         .code-block {
-            background-color: #f5f5f5; /* 薄いグレー */
-            color: #333; /* 文字色 */
-            padding: 8px 12px; 
-            border-radius: 5px;
-            font-family: "Courier New", monospace;
-            text-align: left;
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
             position: relative;
-            width: 100%;
-            margin: 10px auto;
+            margin: 16px 0;
             overflow-x: auto;
-            border: 1px solid #ddd; /* 枠線 */
         }
-.code-block pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 0.9rem;
-    line-height: 1.4rem;
-    color: #1f2937;
-    margin: 0;
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        .tab-active {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2"><i class="fas fa-robot mr-3"></i>AI別プロンプト集</h1>
+                    <p class="text-lg opacity-90">ChatGPT、Gemini、Perplexityに最適化されたプロンプト集</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="search-input" placeholder="プロンプトを検索..." class="search-input rounded-lg px-4 py-2 w-64">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Info Table -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800"><i class="fas fa-info-circle mr-2"></i>おすすめツール</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">ユースケース</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">おすすめツール</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">リンク</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">情報収集</td>
+                            <td class="px-4 py-3"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Perplexity</span></td>
+                            <td class="px-4 py-3"><a href="https://www.perplexity.ai/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>アクセス</a></td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">研究・学術論文検索</td>
+                            <td class="px-4 py-3">
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1">ChatGPT</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Perplexity</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
+                                <a href="https://www.perplexity.ai/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Perplexity</a>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">ニュース・最新情報</td>
+                            <td class="px-4 py-3"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Gemini</span></td>
+                            <td class="px-4 py-3"><a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>アクセス</a></td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">ビジネスリサーチ</td>
+                            <td class="px-4 py-3">
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1">ChatGPT</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Gemini</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
+                                <a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Gemini</a>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">データ分析</td>
+                            <td class="px-4 py-3">
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs mr-1">Gemini</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">ChatGPT</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Gemini</a>
+                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- AI Tabs -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden fade-in">
+            <div class="border-b border-gray-200">
+                <div class="flex">
+                    <button class="tab-btn tab-active px-6 py-4 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center" data-target="chatgpt-prompts">
+                        <i class="fab fa-openai mr-2 text-green-600"></i>ChatGPT
+                    </button>
+                    <button class="tab-btn px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center" data-target="gemini-prompts">
+                        <i class="fab fa-google mr-2 text-purple-600"></i>Gemini
+                    </button>
+                    <button class="tab-btn px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center" data-target="perplexity-prompts">
+                        <i class="fas fa-search mr-2 text-blue-600"></i>Perplexity
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- ChatGPT Prompts -->
+                <div id="chatgpt-prompts" class="prompt-content active">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
+                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                                <i class="fas fa-cogs mr-2 text-blue-600"></i>基本構造
+                            </h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')"><i class="fas fa-copy"></i></button>
+                                <pre id="chatgpt_basic">#設定/役割
+どのような立場、領域から生成してもらいたいか（例. あなたはプロの理学療法士です。ここは日本の長崎県にある総合病院です。）
+#依頼内容
+何を(目的語)、どう(動詞)してもらいたいか（例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。膝OA者の膝構造を示す骨画像のイラストを出力して下さい。）
+#前提条件
+想定される聞き手は誰か（例. 聞き手は、臨床現場で働く理学療法士です。聞き手は、専門知識を持たない一般人です。）
+#出力条件
+どのような形式で出力するか（例. 分かりやすい日本語でお願いします。表として示して下さい。）</pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
+                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                                <i class="fas fa-graduation-cap mr-2 text-green-600"></i>学習支援
+                            </h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyToClipboard('chatGPT学習支援')"><i class="fas fa-copy"></i></button>
+                                <pre id="chatGPT学習支援">あなたは、理学療法および作業療法分野のプロの教育者です。
+以下のステップを実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
+調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
+#ステップ1：キーワードを入力
+ユーザーに「キーワードを入力してください」と確認してください。
+#ステップ2：学生のレベルを選択
+ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。
+1. **「基礎レベル」** 基本概念を理解するテーマ
+2. **「応用レベル」** 文献検索を活用し、より具体的な研究テーマ
+3. **「発展レベル」** 最新の研究動向を反映した高度なテーマ 
+#ステップ3：調査テーマ、検索クエリを作成
+#出力条件 
+・コードブロックで出力してください。</pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6 card-hover md:col-span-2">
+                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                                <i class="fas fa-user-md mr-2 text-red-600"></i>模擬患者生成
+                            </h3>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyToClipboard('chatGPT模擬患者生成')"><i class="fas fa-copy"></i></button>
+                                <pre id="chatGPT模擬患者生成">あなたはプロの理学療法士または作業療法士です。  
+ユーザーが指定した疾患に基づき、模擬患者案を1つ作成してください。  
+コードブロックで出力してください。  
+## ステップ1：発症・手術からの期間を選択
+ユーザーに「模擬患者の発症、または手術からの期間を選択してください」と確認し、以下の選択肢を提示してください。
+1. 30日未満  
+2. 30～90日  
+3. 90～180日  
+4. 180日以上 
+## ステップ2：年代の選択
+ユーザーに「模擬患者の年代を選択してください」と確認し、以下の選択肢を提示してください。
+1. 60歳未満  
+2. 60～74歳  
+3. 75～90歳  
+4. 90歳以上  
+## Ⅰ．模擬患者の基本情報
+### 1. 症例紹介
+- 年齢:  
+- 性別:  
+- 身長・体重:  
+- 利き手:  
+- 主訴:  
+### 2. 医学的情報
+- 疾患名: （ユーザーが入力した疾患を反映）  
+- 発症からの日数:  
+- 障害名:  
+- 現病歴:  
+  - 発症時の症状、診断結果  
+  - 現在の主要な症状・治療経過  
+- 既往歴:（例: 高血圧 / 糖尿病 / 心疾患 など）  
+### 3. 社会的情報
+- 家族歴:（例: 親が脳卒中を経験 など）  
+- 発症前の生活:</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemini Prompts -->
+                <div id="gemini-prompts" class="prompt-content">
+                    <div class="text-center py-12">
+                        <i class="fab fa-google text-6xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Geminiプロンプト</h3>
+                        <p class="text-gray-600">準備中です。近日公開予定！</p>
+                    </div>
+                </div>
+
+                <!-- Perplexity Prompts -->
+                <div id="perplexity-prompts" class="prompt-content">
+                    <div class="text-center py-12">
+                        <i class="fas fa-search text-6xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Perplexityプロンプト</h3>
+                        <p class="text-gray-600">準備中です。近日公開予定！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="opacity-80">© 2024 AI別プロンプト集. 理学療法・作業療法学習支援ツール</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle mr-2"></i>コピーしました！
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active', 'text-gray-900'));
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-gray-500'));
+                btn.classList.add('tab-active', 'text-gray-900');
+                btn.classList.remove('text-gray-500');
+
+                document.querySelectorAll('.prompt-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        // Copy to clipboard with toast
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('コピーに失敗しました。');
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card-hover');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Theme toggle (placeholder for future dark mode)
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            // Future dark mode implementation
+            alert('ダークモードは近日実装予定です！');
+        });
+    </script>
+</body>
+</html>
     white-space: pre-wrap;  /* ← 折り返しを許可する */
     word-break: break-word; /* ← 長い英単語も折り返す（任意） */
 }
