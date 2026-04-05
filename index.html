@@ -6,666 +6,98 @@
     <title>AI別プロンプト集</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .prompt-box {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            border: 2px solid transparent;
         }
-        .card-hover {
-            transition: all 0.3s ease;
+        .prompt-box:hover {
+            background-color: #f7fafc;
+            border-color: #e2e8f0;
         }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        .prompt-box.active {
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
+        .prompt-content {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: none;
+            white-space: pre-line;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .prompt-content.active {
+            display: block;
         }
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #4CAF50;
+        .copy-button {
+            background-color: #4CAF50;
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(100px);
-            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
         }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
+        .copy-button:hover {
+            background-color: #45a049;
         }
-        .search-input {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
+        .copy-button:active {
+            background-color: #388e3c;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transform: translateY(1px);
         }
-        .search-input:focus {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.4);
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        #chatgpt-prompts {
+            display: none;
+        }
+        #chatgpt-prompts.active {
+            display: block;
         }
         .code-block {
-            background: #1f2937;
-            color: #e5e7eb;
-            padding: 16px;
-            border-radius: 8px;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-size: 14px;
-            line-height: 1.5;
+            background-color: #f5f5f5; /* 薄いグレー */
+            color: #333; /* 文字色 */
+            padding: 8px 12px; 
+            border-radius: 5px;
+            font-family: "Courier New", monospace;
+            text-align: left;
             position: relative;
-            margin: 16px 0;
+            width: 100%;
+            margin: 10px auto;
             overflow-x: auto;
+            border: 1px solid #ddd; /* 枠線 */
         }
-        .copy-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s;
-        }
-        .copy-btn:hover {
-            background: #45a049;
-        }
-        .tab-active {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.4);
-        }
-    </style>
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="gradient-bg text-white py-6">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold mb-2"><i class="fas fa-robot mr-3"></i>AI別プロンプト集</h1>
-                    <p class="text-lg opacity-90">ChatGPT、Gemini、Perplexityに最適化されたプロンプト集</p>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <input type="text" id="search-input" placeholder="プロンプトを検索..." class="search-input rounded-lg px-4 py-2 w-64">
-                    <button id="theme-toggle" class="p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-6xl mx-auto px-6 py-8">
-        <!-- Info Table -->
-        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800"><i class="fas fa-info-circle mr-2"></i>おすすめツール</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full text-sm">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">ユースケース</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">おすすめツール</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">リンク</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">情報収集</td>
-                            <td class="px-4 py-3"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Perplexity</span></td>
-                            <td class="px-4 py-3"><a href="https://www.perplexity.ai/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>アクセス</a></td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">研究・学術論文検索</td>
-                            <td class="px-4 py-3">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1">ChatGPT</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Perplexity</span>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
-                                <a href="https://www.perplexity.ai/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Perplexity</a>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">ニュース・最新情報</td>
-                            <td class="px-4 py-3"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Gemini</span></td>
-                            <td class="px-4 py-3"><a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>アクセス</a></td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">ビジネスリサーチ</td>
-                            <td class="px-4 py-3">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1">ChatGPT</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Gemini</span>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
-                                <a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Gemini</a>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">データ分析</td>
-                            <td class="px-4 py-3">
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs mr-1">Gemini</span>
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">ChatGPT</span>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a href="https://gemini.google.com/app?hl=ja" class="text-blue-600 hover:text-blue-800 transition mr-3" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>Gemini</a>
-                                <a href="https://chatgpt.com/" class="text-blue-600 hover:text-blue-800 transition" target="_blank"><i class="fas fa-external-link-alt mr-1"></i>ChatGPT</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- AI Tabs -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden fade-in">
-            <div class="border-b border-gray-200">
-                <div class="flex">
-                    <button class="tab-btn tab-active px-6 py-4 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center" data-target="chatgpt-prompts">
-                        <i class="fab fa-openai mr-2 text-green-600"></i>ChatGPT
-                    </button>
-                    <button class="tab-btn px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center" data-target="gemini-prompts">
-                        <i class="fab fa-google mr-2 text-purple-600"></i>Gemini
-                    </button>
-                    <button class="tab-btn px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center" data-target="perplexity-prompts">
-                        <i class="fas fa-search mr-2 text-blue-600"></i>Perplexity
-                    </button>
-                </div>
-            </div>
-
-            <div class="p-6">
-                <!-- ChatGPT Prompts -->
-                <div id="chatgpt-prompts" class="prompt-content active">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-cogs mr-2 text-blue-600"></i>基本構造
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('chatgpt_basic')"><i class="fas fa-copy"></i></button>
-                                <pre id="chatgpt_basic">#設定/役割
-どのような立場、領域から生成してもらいたいか（例. あなたはプロの理学療法士です。ここは日本の長崎県にある総合病院です。）
-#依頼内容
-何を(目的語)、どう(動詞)してもらいたいか（例. 脳卒中に対する評価指標をアウトカム別にまとめて下さい。膝OA者の膝構造を示す骨画像のイラストを出力して下さい。）
-#前提条件
-想定される聞き手は誰か（例. 聞き手は、臨床現場で働く理学療法士です。聞き手は、専門知識を持たない一般人です。）
-#出力条件
-どのような形式で出力するか（例. 分かりやすい日本語でお願いします。表として示して下さい。）</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-graduation-cap mr-2 text-green-600"></i>学習支援
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('chatGPT学習支援')"><i class="fas fa-copy"></i></button>
-                                <pre id="chatGPT学習支援">あなたは、理学療法および作業療法分野のプロの教育者です。
-以下のステップを実行し、学生が文献検索を通して理解を深められるよう、調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリの生成してください。
-調査テーマは理学療法および作業療法の分野に関連し、学生の理解度に応じて難易度や内容を工夫してください。
-#ステップ1：キーワードを入力
-ユーザーに「キーワードを入力してください」と確認してください。
-#ステップ2：学生のレベルを選択
-ユーザーに「学生のレベルを選択してください」と確認をしたうえで、以下の選択肢を提示してください。
-1. **「基礎レベル」** 基本概念を理解するテーマ
-2. **「応用レベル」** 文献検索を活用し、より具体的な研究テーマ
-3. **「発展レベル」** 最新の研究動向を反映した高度なテーマ 
-#ステップ3：調査テーマ、検索クエリを作成
-#出力条件 
-・コードブロックで出力してください。</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-clipboard-check mr-2 text-orange-600"></i>ルーブリック作成
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('chatGPTルーブリック')"><i class="fas fa-copy"></i></button>
-                                <pre id="chatGPTルーブリック">#設定/役割
-あなたは理学療法および作業療法分野の教育者であり、OSCE（客観的臨床能力試験）の評価を行う教員です。
-#依頼内容
-以下の観点で評価し、OSCEの採点基準としてルーブリックを作成してください。
-1.基礎知識の活用：解剖・生理・運動学の知識を適切に応用し、評価や治療の根拠を説明できるか。
-2.評価・治療の手順：患者の状態に応じた適切な評価・治療計画を立案し、論理的に実施できるか。
-3.技術の正確性：関節可動域測定、筋力評価、治療手技などが正確かつ適切に行えるか。
-4.安全管理：患者の安全を確保し、不適切な動作やリスクのある対応をしていないか。
-5.コミュニケーション能力：患者に適切な声掛けを行い、安心感を与える説明ができるか。
-#前提条件
-評価対象は、OSCE試験を受験する理学療法・作業療法の学生です。
-ルーブリックは、客観的かつ公平な評価ができるように作成してください。
-#出力条件
-表として示してください。
-評価基準は以下の4段階で作成してください。
-- A（優れている）
-- B（標準的）
-- C（改善が必要）
-- D（不十分）</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover md:col-span-2">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-file-alt mr-2 text-indigo-600"></i>論文解説
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('chatGPT論文解説')"><i class="fas fa-copy"></i></button>
-                                <pre id="chatGPT論文解説">#設定/役割
-あなたは学術論文の専門解説者であり、特に医学・工学・社会科学の分野に精通した研究者です。
-#依頼内容
-ユーザーがアップロードしたPDF論文を解析し、「論文タイトル」「方法」「結果」「考察」「限界」「臨床的意義」の各項目を、正確かつ詳細に整理・解説してください。PDFはOCRを活用して画像内の文字情報も正確に解析してください。内容の誤認やハルシネーションが起きないよう、事実確認を徹底してください。
-#前提条件
-対象は臨床現場、教育現場で働く医療従事者です。
-#出力形式
-各項目を箇条書きで整理し、「結果」は表形式で詳細に提示してください。</pre>
-                            </div>
-                        </div></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gemini Prompts -->
-                <div id="gemini-prompts" class="prompt-content">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-cogs mr-2 text-purple-600"></i>基本構造
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('gemini_basic')"><i class="fas fa-copy"></i></button>
-                                <pre id="gemini_basic">（役割）あなたは、症例検討会のプレゼンテーションに慣れている理学療法士です。
-（コンテキスト）担当している患者で、珍しい症例を経験しました。その症例について、症例検討会で発表することになりました。
-（タスク）発表する症例について、病歴、評価、治療内容、治療経過、考察などをまとめた発表資料を作成してください。
-（フォーマット）発表資料は、参加者が理解しやすいように、図表やグラフを適切に配置して作成してください。</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-graduation-cap mr-2 text-green-600"></i>学習支援
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('gemini学習支援')"><i class="fas fa-copy"></i></button>
-                                <pre id="gemini学習支援">あなたは、理学療法および作業療法分野のプロの教育者です。学生に調べ学習をしてもらいます。
-キーワードは「"ここに学生に調べてもらうテーマを入力"」です。学生のレベルは「"ここに学生のレベルを入力（例：基礎レベル、応用レベル、発展レベルなど）"」です。
-キーワードと学生のレベルをもとに、臨床で遭遇する可能性の高い具体的な症例を想定した調査テーマを5つ作成したうえで、J-STAGE/CiNii/Google Scholar向け検索クエリを生成してください。
-その際、用語をダブルクォーテーションで囲む。AND、OR、NOT等のブール演算子を適切に使用し、検索結果が絞り込まれるようにして、コードブロックで出力してください。
-また、学生のレベルに応じて、調査テーマの難易度と検索クエリの複雑さを調整してください。</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover md:col-span-2">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-file-alt mr-2 text-blue-600"></i>議事録作成（Google AI studio）
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('議事録Google AI studio')"><i class="fas fa-copy"></i></button>
-                                <pre id="議事録Google AI studio">アップロードしたデータを話者ごとに整理して議事録を作成してください。
-「えーと」「あの、」などの無意味なフィラーは全て省略し、重要な内容だけをまとめてください。
-話者の名前がわかる場合は記載し、発言の流れが自然に伝わるように整えてください。</pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Perplexity Prompts -->
-                <div id="perplexity-prompts" class="prompt-content">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-cogs mr-2 text-blue-600"></i>基本構造
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('perplexity_basic')"><i class="fas fa-copy"></i></button>
-                                <pre id="perplexity_basic">## Output
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-- Please citations should be provided in Vancouver format.</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-file-alt mr-2 text-green-600"></i>論文要約
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('perplexity_prompt')"><i class="fas fa-copy"></i></button>
-                                <pre id="perplexity_prompt">Please explain the "Title", "Methods", "Results", "Discussion", "Limitations", and "Clinical Significance" of "Paper".
-## Output
-- Please "Methods", "Discussion", "Limitations", and "Clinical Significance"  should be output in bulleted, concise form.
-- Please "Results" should be as detailed as possible and output in tabular format.
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Paper
-***こちらにURLもしくは論文doiを入力してください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-search mr-2 text-purple-600"></i>情報検索（情報源を学術データベースに限らない）
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('perplexity_search')"><i class="fas fa-copy"></i></button>
-                                <pre id="perplexity_search">Please research and output the "Research Theme" in a multifaceted and comprehensive manner.
-Please information from the year 2000 onward should be included in the survey.
-## Output
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Background
-***背景や目的などがあれば入力してください***
-## Research Theme
-***こちらに調べたい疑問や項目をコピペしてください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-database mr-2 text-red-600"></i>情報を調べたい（情報源を学術データベースに限る）
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('perplexity_search_limited')"><i class="fas fa-copy"></i></button>
-                                <pre id="perplexity_search_limited">Please research and output the "Research Theme" in a multifaceted and comprehensive manner.
-STEP1:
-- Please list as many of the best academic databases in the English-speaking world as possible as sources for researching the "Research Theme".
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Central", "Europe PMC", and "UpToDate" as information sources.
-STEP2:
-Please use the academic databases listed in STEP 1 as your information source, and limit your research to open access scholarly articles and freely available full-text scholarly articles.
-STEP3:
-Please original articles, RCTs, systematic reviews, and meta-analyses published after 2010 should be prioritized for research, and high quality articles in terms of number of citations, impact factor, orthometrics, quality of peer review, academic significance, and validity of research methods should be considered.
-## Prohibited
-The following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output of STEP1 results is not required.
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Background
-***背景や目的などがあれば入力してください***
-## Research Theme
-***こちらに調べたい疑問や項目をコピペしてください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-question-circle mr-2 text-yellow-600"></i>PICO/PECOから検索
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('perplexity_pico_search')"><i class="fas fa-copy"></i></button>
-                                <pre id="perplexity_pico_search">Please summarize information on the following "PICO/PECO".
-## Rules
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Central", "Europe PMC", and "UpToDate" as information sources.
-- Please use as many open access and freely available full-text academic articles as possible as information sources.
-- Please use original papers, RCTs, systematic reviews, and meta-analyses published after 2020 as information sources..
-## Prohibited
-Please the following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## PICO/PECO
-***こちらのPICO/PECOをコピペしてください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-flask mr-2 text-indigo-600"></i>介入研究と観察研究を情報収集
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('intervention_observational_research')"><i class="fas fa-copy"></i></button>
-                                <pre id="intervention_observational_research">Please research and output the "Research Theme" in a multifaceted and comprehensive manner.
-## Rules
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Cetral", "Europe PMC", and "UpToDate" as information sources.
-- Please use as many open access and freely available full-text academic articles as possible as information sources.
-- Please use as many original papers, RCTs, systematic reviews, and meta-analyses as possible as information sources.
-## Prohibited
-Please the following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output results should be thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Research Theme
-※介入研究の動向を調べる場合
-Trends in Interventional Research and Observational Research for ***ここに疾患名を入力してください***.
-※観察研究の動向を調べる場合
-Trends in Interventional Research and Observational Research for ***ここに疾患名を入力してください***.</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-lightbulb mr-2 text-orange-600"></i>仮説検証
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('仮説検証')"><i class="fas fa-copy"></i></button>
-                                <pre id="仮説検証">Please research the "Hypothesis" in a multifaceted and comprehensive manner, following the PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) guidelines.
-STEP1:
-- Please list as many of the best academic databases in the English-speaking world as possible as sources for testing the "Hypothesis".
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Central", "Europe PMC", and "UpToDate" as information sources.
-STEP2:
-Please use the academic databases listed in STEP 1 as your information source, and limit your research to open access scholarly articles and freely available full-text scholarly articles.
-STEP3:
-Please original articles, RCTs, systematic reviews, and meta-analyses published after 2010 should be prioritized for research, and high quality articles in terms of number of citations, impact factor, orthometrics, quality of peer review, academic significance, and validity of research methods should be considered.
-STEP4:
-Please thoroughly identify not only information that confirms the "Hypothesis," but also counterarguments and criticisms, and synthesize them into an output conclusion.
-## Prohibited
-The following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output of STEP1 results is not required.
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Background
-***背景や目的などがあれば入力してください***
-## Hypothesis
-***こちらに検証したい仮説を入力してください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-question mr-2 text-teal-600"></i>CQからRQ生成
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('CQからRQ生成')"><i class="fas fa-copy"></i></button>
-                                <pre id="CQからRQ生成">Please research the "Clinical Question" in a multifaceted and comprehensive manner and generate a Research Question.
-STEP1:
-Please list as many of the best academic databases in the English-speaking world as possible as sources for testing the "Clinical Question".
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Central", "Europe PMC", and "UpToDate" as information sources.
-STEP2:
-Please use the academic databases listed in STEP 1 as your information source, and limit your research to open access scholarly articles and freely available full-text scholarly articles.
-STEP3:
-Please original articles, RCTs, systematic reviews, and meta-analyses published after 2010 should be prioritized for research, and high quality articles in terms of number of citations, impact factor, orthometrics, quality of peer review, academic significance, and validity of research methods should be considered.
-STEP4:
-Based on the findings of STEP3, please create as many Research Questions as possible that can be conducted at a single facility.
-STEP5:
-Please evaluate the Research Question created in STEP4 based on the FIRM²NESS and PICO/PECOT framework and output 5 recommended Research Questions.
-## Prohibited
-The following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output of STEP1 results is not required.
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Clinical Question
-***こちらにCQを入力してください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-briefcase mr-2 text-gray-600"></i>資料構成（ビジネス系）
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('資料構成（ビジネス系）')"><i class="fas fa-copy"></i></button>
-                                <pre id="資料構成（ビジネス系）">Please consider the structure of the document "Presentation Theme".
-STEP1:
-Please Please thoroughly research quality information to structure the "Presentation Theme" material.
-STEP2:
-Based on the findings of STEP 1, please structure your "Presentation Theme" materials.
-## Output
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Background
-***こちらに背景や目的を入力してください***
-## Presentation Theme
-***こちらに作成する資料のテーマを入力してください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-hospital mr-2 text-red-500"></i>資料構成（医療系）
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('資料構成（医療系）')"><i class="fas fa-copy"></i></button>
-                                <pre id="資料構成（医療系）">Please consider the structure of the document "Presentation Theme".
-STEP1:
-- Please list as many of the best academic databases in the English-speaking world as possible as sources for consider the structure of the document "Presentation Theme".
-- Please use the academic databases "PubMed", "EMBASE", "Cochrane Library", "PubMed Central", "Europe PMC", and "UpToDate" as information sources.
-STEP2:
-Please use the academic databases listed in STEP 1 as your information source, and limit your research to open access scholarly articles and freely available full-text scholarly articles.
-STEP3:
-Please original articles, RCTs, systematic reviews, and meta-analyses published after 2010 should be prioritized for research, and high quality articles in terms of number of citations, impact factor, orthometrics, quality of peer review, academic significance, and validity of research methods should be considered.
-STEP4:
-Based on the findings of STEP 3, please structure your "Presentation Theme" materials.
-## Prohibited
-The following items are prohibited and must not be done.
-- Please information from blog sites and websites of medical institutions are excluded.
-- Please exclude any paywalled papers or articles that require subscription.
-## Output
-- Please output of STEP1 results is not required.
-- Please output results should be Please thoroughly fact-checked to ensure that there is no halcination.
-- Please output should be in academic style, and in japanese.
-- Please output as much detail as possible.
-## Background
-***こちらに背景や目的を入力してください***
-## Presentation Theme
-***こちらに作成する資料のテーマを入力してください***</pre>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 rounded-lg p-6 card-hover md:col-span-2">
-                            <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                                <i class="fas fa-edit mr-2 text-green-600"></i>資料校正
-                            </h3>
-                            <div class="code-block">
-                                <button class="copy-btn" onclick="copyToClipboard('資料校正')"><i class="fas fa-copy"></i></button>
-                                <pre id="資料校正">The following "Text" is ***どういった資料・文章かを入力してください***.
-STEP1:
-Please provide strict feedback on the following "Text" from your supervisor's point of view.
-STEP2:
-Please revise the "Text" with reference to the feedback from STEP1.
-## Text
-***フィードバックしてもらいたい資料・文章を入力してください***</pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="gradient-bg text-white py-8 mt-12">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <p class="opacity-80">© 2024 AI別プロンプト集. 理学療法・作業療法学習支援ツール</p>
-        </div>
-    </footer>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <i class="fas fa-check-circle mr-2"></i>コピーしました！
-    </div>
-
-    <script>
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active', 'text-gray-900'));
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-gray-500'));
-                btn.classList.add('tab-active', 'text-gray-900');
-                btn.classList.remove('text-gray-500');
-
-                document.querySelectorAll('.prompt-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(btn.dataset.target).classList.add('active');
-            });
-        });
-
-        // Copy to clipboard with toast
-        function copyToClipboard(elementId) {
-            const textToCopy = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                showToast();
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('コピーに失敗しました。');
-            });
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Search functionality
-        document.getElementById('search-input').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.card-hover');
-            
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        // Theme toggle (placeholder for future dark mode)
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            // Future dark mode implementation
-            alert('ダークモードは近日実装予定です！');
-        });
-    </script>
-</body>
-</html>
+.code-block pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+    color: #1f2937;
+    margin: 0;
     white-space: pre-wrap;  /* ← 折り返しを許可する */
     word-break: break-word; /* ← 長い英単語も折り返す（任意） */
 }
@@ -1275,5 +707,3 @@ Please revise the “Text” with reference to the feedback from STEP1.
     </script>
 </body>
 </html>
-
-
